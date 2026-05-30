@@ -22,7 +22,7 @@ if [ ! -f "$CONFIG_DIR/config.json" ]; then
   mkdir -p "$CONFIG_DIR"
   cat > "$CONFIG_DIR/config.json" << 'CONFIG'
 {
-  "clientId": "YOUR_CLIENT_ID_HERE",
+  "clientId": "678248331847401494",
   "transport": "ipc",
   "rotationInterval": 600,
   "profiles": [

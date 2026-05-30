@@ -33,7 +33,7 @@ const ConfigSchema = z.object({
 const DEFAULT_CONFIG_PATH = join(homedir(), '.config', 'discord-rpc-tui', 'config.json');
 
 const DEFAULT_CONFIG: Config = {
-  clientId: 'YOUR_CLIENT_ID_HERE',
+  clientId: '678248331847401494',
   transport: 'ipc',
   profiles: [
     {
