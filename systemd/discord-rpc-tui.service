@@ -5,7 +5,8 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStart=%h/.local/share/discord-rpc-tui/bin/rpc-tui
+ExecStart=/home/fxckcode/.hermes/node/bin/node /home/fxckcode/projects/discord-rpc-tui/dist/index.js
+WorkingDirectory=/home/fxckcode/projects/discord-rpc-tui
 Restart=on-failure
 RestartSec=5
 Environment=NODE_ENV=production

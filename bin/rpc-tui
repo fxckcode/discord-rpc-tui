@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-DIR="$(cd "$(dirname "$0")" && pwd)"
-exec node "$DIR/../dist/index.js" "$@"
+DIR="/home/fxckcode/.local/share/discord-rpc-tui"
+export PATH="/home/fxckcode/.hermes/node/bin:$PATH"
+cd "$DIR"
+exec node dist/index.js "$@"
