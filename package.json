@@ -1,0 +1,41 @@
+{
+  "name": "discord-rpc-tui",
+  "version": "0.1.0",
+  "description": "Custom Discord Rich Presence manager with a beautiful Ink TUI",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "rpc-tui": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup src/index.tsx --out-dir dist --format esm --clean",
+    "dev": "tsup src/index.tsx --out-dir dist --format esm --watch",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@xhayper/discord-rpc": "^1",
+    "conf": "^13",
+    "ink": "^7",
+    "react": "^19",
+    "zod": "^3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/react": "^19",
+    "tsup": "^8",
+    "typescript": "^5",
+    "vitest": "^3"
+  },
+  "keywords": [
+    "discord",
+    "rich-presence",
+    "rpc",
+    "tui",
+    "ink"
+  ],
+  "author": "fxckcode",
+  "license": "MIT"
+}

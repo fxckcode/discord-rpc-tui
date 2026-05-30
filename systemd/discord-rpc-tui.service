@@ -1,0 +1,14 @@
+[Unit]
+Description=Discord Rich Presence TUI — custom activity manager
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/share/discord-rpc-tui/bin/rpc-tui
+Restart=on-failure
+RestartSec=5
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,15 @@
+{
+  "project": "discord-rpc-tui",
+  "description": "Custom Discord Rich Presence manager with Ink TUI",
+  "stack": {
+    "language": "TypeScript",
+    "framework": "Ink (React TUI)",
+    "package_manager": "pnpm",
+    "runtime": "Node.js",
+    "bundler": "tsup",
+    "test_framework": "vitest"
+  },
+  "artifact_store": "files-only",
+  "chain_strategy": "single-pr",
+  "sdd_init_complete": true
+}
