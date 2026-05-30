@@ -42,7 +42,15 @@ if (isRawModeSupported()) {
   const config = await configManager.load();
   console.log(`[rpc-tui] Config loaded: ${config.profiles.length} profiles`);
 
-  rpcManager.on('connected', () => console.log('[rpc-tui] Connected to Discord'));
+  rpcManager.on('connected', () => {
+    console.log('[rpc-tui] Connected to Discord');
+    // Set initial activity when connected
+    if (config.profiles.length > 0) {
+      rpcManager.setActivity(config.profiles[0].activity, config.profiles[0].name)
+        .then(() => console.log(`[rpc-tui] Activity set: ${config.profiles[0].name}`))
+        .catch((err) => console.error('[rpc-tui] Failed to set activity:', err.message));
+    }
+  });
   rpcManager.on('disconnected', () => console.log('[rpc-tui] Disconnected'));
   rpcManager.on('error', (err) => console.error('[rpc-tui] Error:', err.message));
   rpcManager.on('activity-set', (name) => console.log(`[rpc-tui] Activity set: ${name}`));
@@ -57,18 +65,7 @@ if (isRawModeSupported()) {
   }
 
   await rpcManager.connect(config.clientId);
-  console.log('[rpc-tui] Connecting...');
-
-  // Set initial activity when connected
-  rpcManager.on('connected', async () => {
-    if (config.profiles.length > 0) {
-      try {
-        await rpcManager.setActivity(config.profiles[0].activity, config.profiles[0].name);
-      } catch (err) {
-        console.error('[rpc-tui] Failed to set activity:', (err as Error).message);
-      }
-    }
-  });
+  console.log('[rpc-tui] Service running');
 
   // Keep alive
   process.on('SIGINT', async () => {

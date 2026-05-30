@@ -22,7 +22,7 @@ describe('ConfigManager', () => {
 
   it('should create default config on first load', async () => {
     const config = await manager.load();
-    expect(config.clientId).toBe('678248331847401494');
+    expect(config.clientId).toBe('788494723714252871');
     expect(config.profiles).toHaveLength(2);
     expect(config.transport).toBe('ipc');
     expect(config.rotationInterval).toBe(600);

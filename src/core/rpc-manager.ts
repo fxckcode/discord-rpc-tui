@@ -35,7 +35,7 @@ export class RPCManager extends EventEmitter {
     this.setStatus('connecting');
 
     try {
-      this.client = new Client({ clientId });
+      this.client = new Client({ clientId, transport: 'ipc' });
 
       this.client.on('ready', () => {
         this.reconnectAttempt = 0;
@@ -49,7 +49,9 @@ export class RPCManager extends EventEmitter {
         this.scheduleReconnect();
       });
 
-      await this.client.connect();
+      // Use login() instead of connect() — login() emits 'ready'
+      // login() calls connect() internally, then emits 'ready' when no auth scopes are needed
+      await this.client.login();
     } catch (error) {
       this.setStatus('disconnected');
       this.emit('error', error as Error);
