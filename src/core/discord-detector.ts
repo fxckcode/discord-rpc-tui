@@ -1,10 +1,7 @@
 import { accessSync, constants } from 'node:fs';
 import { EventEmitter } from 'node:events';
 
-const SOCKET_PATHS = [
-  process.env.XDG_RUNTIME_DIR
-    ? `${process.env.XDG_RUNTIME_DIR}/discord-ipc-0`
-    : '/tmp/discord-ipc-0',
+const STATIC_SOCKET_PATHS = [
   '/tmp/snap.discord/discord-ipc-0',
   '/tmp/app/com.discordapp.Discord/discord-ipc-0',
 ];
@@ -24,8 +21,15 @@ export class DiscordDetector extends EventEmitter {
     this.pollIntervalMs = pollIntervalMs;
   }
 
+  private getSocketPaths(): string[] {
+    const xdgPath = process.env.XDG_RUNTIME_DIR
+      ? `${process.env.XDG_RUNTIME_DIR}/discord-ipc-0`
+      : '/tmp/discord-ipc-0';
+    return [xdgPath, ...STATIC_SOCKET_PATHS];
+  }
+
   isDiscordRunning(): boolean {
-    return SOCKET_PATHS.some((socketPath) => {
+    return this.getSocketPaths().some((socketPath) => {
       try {
         accessSync(socketPath, constants.R_OK);
         return true;
