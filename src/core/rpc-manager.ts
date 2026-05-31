@@ -66,6 +66,8 @@ export class RPCManager extends EventEmitter {
 
     const rpcActivity: Record<string, unknown> = {};
 
+    // name is the title shown on Discord (e.g., "Playing {name}")
+    if (activity.name) rpcActivity.name = activity.name;
     if (activity.state) rpcActivity.state = activity.state;
     if (activity.details) rpcActivity.details = activity.details;
     if (activity.type !== undefined) rpcActivity.type = activity.type;

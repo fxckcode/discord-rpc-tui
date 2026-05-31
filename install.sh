@@ -30,6 +30,7 @@ if [ ! -f "$CONFIG_DIR/config.json" ]; then
       "name": "Coding",
       "activity": {
         "state": "Building something cool",
+        "name": "easy-rag",
         "details": "TypeScript | Ink TUI",
         "startTimestamp": true,
         "type": 0

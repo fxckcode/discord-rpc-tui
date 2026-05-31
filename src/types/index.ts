@@ -1,6 +1,7 @@
 export type ActivityType = 0 | 1 | 2 | 3 | 5;
 
 export interface ActivityConfig {
+  name?: string;
   state?: string;
   details?: string;
   startTimestamp?: boolean | number;

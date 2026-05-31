@@ -6,6 +6,7 @@ import { join, dirname } from 'node:path';
 import type { Config } from '../types/index.js';
 
 const ActivityConfigSchema = z.object({
+  name: z.string().optional(),
   state: z.string().optional(),
   details: z.string().optional(),
   startTimestamp: z.union([z.boolean(), z.number()]).optional(),
@@ -40,6 +41,7 @@ const DEFAULT_CONFIG: Config = {
       name: 'Coding',
       activity: {
         state: 'Building something cool',
+        name: 'easy-rag',
         details: 'TypeScript • Ink TUI',
         startTimestamp: true,
         type: 0,
