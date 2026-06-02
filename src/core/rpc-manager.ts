@@ -35,7 +35,7 @@ export class RPCManager extends EventEmitter {
     this.setStatus('connecting');
 
     try {
-      this.client = new Client({ clientId, transport: 'ipc' });
+      this.client = new Client({ clientId, transport: { type: 'ipc' } });
 
       this.client.on('ready', () => {
         this.reconnectAttempt = 0;

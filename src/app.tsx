@@ -191,7 +191,7 @@ export function App({ configManager, rpcManager, discordDetector }: AppProps) {
 
       <Box flexDirection="column">
         <Text bold>Events:</Text>
-        <Box flexDirection="column" height={6} overflowY="auto">
+        <Box flexDirection="column" height={6} overflowY="hidden">
           {logs.slice(-6).map((log, i) => (
             <Text key={i} dimColor>{log}</Text>
           ))}

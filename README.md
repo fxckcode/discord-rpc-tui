@@ -13,6 +13,7 @@
 - ⚙️ **Configurable** — JSON config at `~/.config/discord-rpc-tui/config.json`
 - 🚀 **Auto-start** — systemd user service, starts when you log in
 - 🔍 **Discord Detection** — automatically pauses when Discord is closed
+- 🤖 **MCP Server** — Model Context Protocol server for agent CLI integration (Hermes Agent, Claude Code, etc.)
 
 ## Quick Start
 
@@ -119,6 +120,9 @@ Located at `~/.config/discord-rpc-tui/config.json`:
 src/
 ├── index.tsx              # Entry — renders Ink app
 ├── app.tsx                # Main App component
+├── mcp/
+│   ├── mcp-handlers.ts    # MCP tool handlers (set_activity, connect, etc.)
+│   └── mcp-server.ts      # MCP server bootstrap (stdio + SSE transports)
 ├── core/
 │   ├── rpc-manager.ts     # Discord RPC (connect, activity, reconnect)
 │   ├── config-manager.ts  # Config (read/write/validate with Zod)
@@ -129,6 +133,48 @@ src/
 └── types/
     └── index.ts           # TypeScript types
 ```
+
+## MCP Server
+
+`rpc-tui` includes a [Model Context Protocol](https://modelcontextprotocol.io) server that allows AI agents and other apps to control your Discord Rich Presence programmatically.
+
+### Usage
+
+```bash
+# Stdio mode (for agent CLI — Hermes Agent, Claude Code, Codex CLI)
+rpc-tui mcp
+
+# SSE mode (for HTTP clients)
+rpc-tui mcp --sse
+rpc-tui mcp --sse --port 3100
+```
+
+### Available Tools
+
+| Tool | Description | Parameters |
+|------|-------------|------------|
+| `set_activity` | Set custom Rich Presence | `state`, `details`, `name`, `type`, `startTimestamp`, `largeImageKey`, `largeImageText`, `smallImageKey`, `smallImageText`, `buttons[]` |
+| `list_profiles` | List profiles from config | _(none)_ |
+| `get_status` | Get connection + Discord status | _(none)_ |
+| `set_profile` | Activate a profile by name | `name` (required) |
+| `connect` | Connect to Discord RPC | _(none)_ |
+| `disconnect` | Disconnect from Discord RPC | _(none)_ |
+
+### Example: Agent Integration (stdio)
+
+```bash
+# From any MCP-compatible agent:
+# The agent spawns `rpc-tui mcp` and discovers tools automatically.
+# Then calls tools like:
+#   set_activity({ state: "Coding", details: "Building MCP", type: 0 })
+#   set_profile({ name: "Coding" })
+#   get_status({})
+```
+
+### Transport Modes
+
+- **Stdio** — primary mode for agent CLIs. Communicates via stdin/stdout using JSON-RPC. The agent spawns the server as a subprocess.
+- **SSE** (Streamable HTTP) — for HTTP clients. Runs on `http://localhost:3100/mcp` by default. Includes session management and DNS rebinding protection.
 
 ## Development
 
