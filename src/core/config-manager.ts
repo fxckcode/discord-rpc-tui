@@ -14,8 +14,10 @@ const ActivityConfigSchema = z.object({
   type: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3), z.literal(5)]).optional(),
   largeImageKey: z.string().optional(),
   largeImageText: z.string().optional(),
+  largeImageUrl: z.string().url().optional(),
   smallImageKey: z.string().optional(),
   smallImageText: z.string().optional(),
+  smallImageUrl: z.string().url().optional(),
   buttons: z.array(z.object({ label: z.string(), url: z.string() })).max(2).optional(),
 });
 

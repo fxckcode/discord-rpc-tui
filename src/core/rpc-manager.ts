@@ -83,9 +83,26 @@ export class RPCManager extends EventEmitter {
     }
 
     // Assets
-    if (activity.largeImageKey) rpcActivity.largeImageKey = activity.largeImageKey;
+    // largeImageKey: uploaded asset name from Dev Portal
+    // largeImageUrl: external URL (auto-converted to mp:external/ for Discord RPC)
+    if (activity.largeImageUrl) {
+      // External URL → use mp:external/ prefix
+      const url = activity.largeImageUrl.startsWith('http')
+        ? `mp:external/${activity.largeImageUrl}`
+        : activity.largeImageUrl;
+      rpcActivity.largeImageKey = url;
+    } else if (activity.largeImageKey) {
+      rpcActivity.largeImageKey = activity.largeImageKey;
+    }
     if (activity.largeImageText) rpcActivity.largeImageText = activity.largeImageText;
-    if (activity.smallImageKey) rpcActivity.smallImageKey = activity.smallImageKey;
+    if (activity.smallImageUrl) {
+      const url = activity.smallImageUrl.startsWith('http')
+        ? `mp:external/${activity.smallImageUrl}`
+        : activity.smallImageUrl;
+      rpcActivity.smallImageKey = url;
+    } else if (activity.smallImageKey) {
+      rpcActivity.smallImageKey = activity.smallImageKey;
+    }
     if (activity.smallImageText) rpcActivity.smallImageText = activity.smallImageText;
 
     // Buttons (max 2)

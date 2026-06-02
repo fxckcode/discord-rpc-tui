@@ -171,4 +171,45 @@ describe('RPCManager', () => {
     await manager.setActivity({ state: 'Hello' }, 'TestProfile');
     expect(activitySpy).toHaveBeenCalledWith('TestProfile');
   });
+
+  it('should convert largeImageUrl to mp:external format', async () => {
+    await connectAndEmitReady();
+    await manager.setActivity({
+      state: 'test',
+      largeImageUrl: 'https://example.com/image.png',
+    });
+    const args = currentClient!.user.setActivity.mock.calls[0][0];
+    expect(args.largeImageKey).toBe('mp:external/https://example.com/image.png');
+  });
+
+  it('should pass largeImageKey as-is for asset names', async () => {
+    await connectAndEmitReady();
+    await manager.setActivity({
+      state: 'test',
+      largeImageKey: 'my_uploaded_asset',
+    });
+    const args = currentClient!.user.setActivity.mock.calls[0][0];
+    expect(args.largeImageKey).toBe('my_uploaded_asset');
+  });
+
+  it('should prefer largeImageUrl over largeImageKey', async () => {
+    await connectAndEmitReady();
+    await manager.setActivity({
+      state: 'test',
+      largeImageKey: 'asset_name',
+      largeImageUrl: 'https://example.com/image.png',
+    });
+    const args = currentClient!.user.setActivity.mock.calls[0][0];
+    expect(args.largeImageKey).toBe('mp:external/https://example.com/image.png');
+  });
+
+  it('should convert smallImageUrl to mp:external format', async () => {
+    await connectAndEmitReady();
+    await manager.setActivity({
+      state: 'test',
+      smallImageUrl: 'https://example.com/small.png',
+    });
+    const args = currentClient!.user.setActivity.mock.calls[0][0];
+    expect(args.smallImageKey).toBe('mp:external/https://example.com/small.png');
+  });
 });

@@ -9,8 +9,10 @@ export interface ActivityConfig {
   type?: ActivityType;
   largeImageKey?: string;
   largeImageText?: string;
+  largeImageUrl?: string;
   smallImageKey?: string;
   smallImageText?: string;
+  smallImageUrl?: string;
   buttons?: { label: string; url: string }[];
 }
 

@@ -31,8 +31,10 @@ export async function handleSetActivity(
   }
   if (typeof args.largeImageKey === 'string') activity.largeImageKey = args.largeImageKey;
   if (typeof args.largeImageText === 'string') activity.largeImageText = args.largeImageText;
+  if (typeof args.largeImageUrl === 'string') activity.largeImageUrl = args.largeImageUrl;
   if (typeof args.smallImageKey === 'string') activity.smallImageKey = args.smallImageKey;
   if (typeof args.smallImageText === 'string') activity.smallImageText = args.smallImageText;
+  if (typeof args.smallImageUrl === 'string') activity.smallImageUrl = args.smallImageUrl;
   if (Array.isArray(args.buttons)) {
     activity.buttons = (args.buttons as { label: string; url: string }[]).slice(0, 2);
   }
@@ -129,5 +131,21 @@ export async function handleDisconnect(rpcManager: RPCManager): Promise<CallTool
     return textResult('Disconnected from Discord RPC');
   } catch (err) {
     return errorResult(`Disconnect failed: ${(err as Error).message}`);
+  }
+}
+
+export async function handleOpenDevPortal(configManager: ConfigManager): Promise<CallToolResult> {
+  try {
+    const config = await configManager.load();
+    const url = `https://discord.com/developers/applications/${config.clientId}/rich-presence/assets`;
+    const msg = `Open this URL in your browser to upload Rich Presence images:\n${url}\n\n` +
+      `After uploading:\n` +
+      `1. Upload your images (PNG, JPEG, GIF)\n` +
+      `2. Note the "Asset Name" Discord assigns (e.g., "myimage")\n` +
+      `3. Use that name as largeImageKey or smallImageKey in set_activity\n` +
+      `   Example: set_activity({ ..., largeImageKey: "myimage" })`;
+    return textResult(msg);
+  } catch (err) {
+    return errorResult(`Failed to get client ID: ${(err as Error).message}`);
   }
 }

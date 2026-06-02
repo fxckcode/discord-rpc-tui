@@ -159,6 +159,7 @@ rpc-tui mcp --sse --port 3100
 | `set_profile` | Activate a profile by name | `name` (required) |
 | `connect` | Connect to Discord RPC | _(none)_ |
 | `disconnect` | Disconnect from Discord RPC | _(none)_ |
+| `open_dev_portal` | Open Dev Portal to upload images | _(none)_ |
 
 ### Example: Agent Integration (stdio)
 

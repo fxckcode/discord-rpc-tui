@@ -13,6 +13,7 @@ import {
   handleSetProfile,
   handleConnect,
   handleDisconnect,
+  handleOpenDevPortal,
 } from './mcp-handlers.js';
 
 export interface McpServerOptions {
@@ -45,8 +46,8 @@ export async function startDiscordRpcMcpServer(
   mcpServer.registerTool('set_activity', {
     description: 'Set Discord Rich Presence activity. ' +
       'Args: state, details, name, type (0=Playing, 1=Streaming, 2=Listening, 3=Watching, 5=Competing), ' +
-      'startTimestamp (true=elapsed, number=epoch ms), largeImageKey, largeImageText, ' +
-      'smallImageKey, smallImageText, buttons (max 2, each with label+url)',
+      'startTimestamp (true=elapsed, number=epoch ms), largeImageKey (asset name), largeImageUrl (external URL), ' +
+      'smallImageKey, smallImageUrl, buttons (max 2, each with label+url)',
     inputSchema: z.object({
       state: z.string().optional(),
       details: z.string().optional(),
@@ -55,8 +56,10 @@ export async function startDiscordRpcMcpServer(
       startTimestamp: z.union([z.boolean(), z.number()]).optional(),
       largeImageKey: z.string().optional(),
       largeImageText: z.string().optional(),
+      largeImageUrl: z.string().url().optional().describe('External image URL (auto-converted for Discord RPC)'),
       smallImageKey: z.string().optional(),
       smallImageText: z.string().optional(),
+      smallImageUrl: z.string().url().optional().describe('External image URL (auto-converted for Discord RPC)'),
       buttons: z.array(z.object({ label: z.string(), url: z.string() })).max(2).optional(),
     }),
   }, async (args) => handleSetActivity(rpcManager, args as Record<string, unknown>));
@@ -87,6 +90,11 @@ export async function startDiscordRpcMcpServer(
     description: 'Disconnect from Discord RPC',
     inputSchema: z.object({}),
   }, async () => handleDisconnect(rpcManager));
+
+  mcpServer.registerTool('open_dev_portal', {
+    description: 'Open Discord Developer Portal assets page for uploading Rich Presence images. After uploading, use the asset name as largeImageKey.',
+    inputSchema: z.object({}),
+  }, async () => handleOpenDevPortal(configManager));
 
   // ── Transport ──
 
