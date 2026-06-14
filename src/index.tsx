@@ -3,6 +3,7 @@
 import { render } from 'ink';
 import React from 'react';
 import { App } from './app.js';
+import type { ActivityConfig } from './types/index.js';
 import { ConfigManager } from './core/config-manager.js';
 import { RPCManager } from './core/rpc-manager.js';
 import { DiscordDetector } from './core/discord-detector.js';
@@ -11,10 +12,53 @@ import { startDiscordRpcMcpServer } from './mcp/mcp-server.js';
 
 // CLI argument parsing
 const args = process.argv.slice(2);
+const isSetActivity = args[0] === 'set-activity';
 const isMcpMode = args.includes('mcp');
 const isSseMode = args.includes('--sse');
 const portIndex = args.indexOf('--port');
 const ssePort = portIndex !== -1 ? parseInt(args[portIndex + 1], 10) : 3100;
+
+if (isSetActivity) {
+  const configManager = new ConfigManager();
+  const rpcManager = new RPCManager();
+
+  let activityArg = args.slice(1).join(' ');
+  let activity: ActivityConfig;
+
+  if (!activityArg) {
+    console.error('[rpc-tui] Usage: rpc-tui set-activity \'{"state": "...", "details": "..."}\'');
+    process.exit(1);
+  }
+
+  try {
+    activity = JSON.parse(activityArg);
+  } catch {
+    console.error('[rpc-tui] Invalid JSON for activity config');
+    process.exit(1);
+  }
+
+  try {
+    const config = await configManager.load();
+
+    rpcManager.setRepoButtonConfig({
+      showRepoButton: config.showRepoButton ?? true,
+      repoUrl: config.repoUrl ?? 'https://github.com/fxckcode/discord-rpc-tui',
+      repoButtonLabel: config.repoButtonLabel ?? 'View on GitHub',
+    });
+
+    console.error('[rpc-tui] Connecting to Discord...');
+    await rpcManager.connect(config.clientId);
+    console.error('[rpc-tui] Connected. Setting activity...');
+    await rpcManager.setActivity(activity, 'cli');
+    console.error('[rpc-tui] Activity set.');
+    await rpcManager.destroy();
+    process.exit(0);
+  } catch (err) {
+    console.error(`[rpc-tui] Error: ${(err as Error).message}`);
+    await rpcManager.destroy().catch(() => {});
+    process.exit(1);
+  }
+}
 
 if (isMcpMode) {
   // ── MCP Server mode ──
