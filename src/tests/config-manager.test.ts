@@ -78,4 +78,109 @@ describe('ConfigManager', () => {
     };
     await expect(manager.save(config)).rejects.toThrow();
   });
+
+  describe('save()', () => {
+    it('should validate clientId is non-empty', async () => {
+      const config = {
+        clientId: '',
+        transport: 'ipc' as const,
+        profiles: [{ name: 'P1', activity: { state: 'S1' } }],
+        rotationInterval: 0,
+      };
+      await expect(manager.save(config)).rejects.toThrow('Client ID is required');
+    });
+
+    it('should validate transport is ipc or websocket', async () => {
+      const config = {
+        clientId: 'test',
+        transport: 'tcp' as any,
+        profiles: [{ name: 'P1', activity: { state: 'S1' } }],
+        rotationInterval: 0,
+      };
+      await expect(manager.save(config)).rejects.toThrow();
+    });
+
+    it('should validate profiles is non-empty array', async () => {
+      const config = {
+        clientId: 'test',
+        transport: 'ipc' as const,
+        profiles: [],
+        rotationInterval: 0,
+      };
+      await expect(manager.save(config)).rejects.toThrow('At least one profile is required');
+    });
+
+    it('should validate rotationInterval is non-negative', async () => {
+      const config = {
+        clientId: 'test',
+        transport: 'ipc' as const,
+        profiles: [{ name: 'P1', activity: { state: 'S1' } }],
+        rotationInterval: -1,
+      };
+      await expect(manager.save(config)).rejects.toThrow();
+    });
+
+    it('should validate profile name is non-empty', async () => {
+      const config = {
+        clientId: 'test',
+        transport: 'ipc' as const,
+        profiles: [{ name: '', activity: { state: 'S1' } }],
+        rotationInterval: 0,
+      };
+      await expect(manager.save(config)).rejects.toThrow();
+    });
+
+    it('should round-trip a full config: save then load', async () => {
+      const config = {
+        clientId: '123456',
+        transport: 'websocket' as const,
+        profiles: [
+          { name: 'First', activity: { state: 'Working', details: 'Deep focus', type: 0 as const } },
+          { name: 'Second', activity: { state: 'Chilling', type: 3 as const } },
+        ],
+        rotationInterval: 120,
+        showRepoButton: false,
+        repoUrl: 'https://example.com/repo',
+        repoButtonLabel: 'Check it out',
+      };
+      await manager.save(config);
+      const loaded = await manager.load();
+      expect(loaded.clientId).toBe('123456');
+      expect(loaded.transport).toBe('websocket');
+      expect(loaded.profiles).toHaveLength(2);
+      expect(loaded.profiles[0].activity.state).toBe('Working');
+      expect(loaded.rotationInterval).toBe(120);
+      expect(loaded.showRepoButton).toBe(false);
+    });
+
+    it('should accept url fields in activity (largeImageUrl, smallImageUrl)', async () => {
+      const config = {
+        clientId: 'test',
+        transport: 'ipc' as const,
+        profiles: [{
+          name: 'P1',
+          activity: {
+            state: 'S1',
+            largeImageUrl: 'https://example.com/img.png',
+            smallImageUrl: 'https://example.com/small.png',
+          },
+        }],
+        rotationInterval: 0,
+      };
+      await expect(manager.save(config)).resolves.toBeUndefined();
+    });
+
+    it('should reject invalid url in largeImageUrl', async () => {
+      const config = {
+        clientId: 'test',
+        transport: 'ipc' as const,
+        profiles: [{
+          name: 'P1',
+          activity: { state: 'S1', largeImageUrl: 'not-a-url' },
+        }],
+        rotationInterval: 0,
+      };
+      await expect(manager.save(config)).rejects.toThrow();
+    });
+  });
 });

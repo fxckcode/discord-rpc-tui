@@ -1,7 +1,7 @@
 {
   "name": "discord-rpc-tui",
-  "version": "0.1.0",
-  "description": "MCP server & Ink TUI — forge Discord Rich Presence with the elegance of engineering and the mind of AI",
+  "version": "0.4.0",
+  "description": "MCP server, TUI, and web gallery — forge Discord Rich Presence with elegance and AI",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -9,11 +9,15 @@
   },
   "scripts": {
     "build": "tsup src/index.tsx --out-dir dist --format esm --clean",
+    "build:web": "cd web && pnpm build",
     "dev": "tsup src/index.tsx --out-dir dist --format esm --watch",
+    "dev:web": "cd web && pnpm dev",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:web": "cd web && pnpm test",
+    "version": "node -p \"require('./package.json').version\""
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
@@ -37,7 +41,8 @@
     "rich-presence",
     "rpc",
     "tui",
-    "ink"
+    "ink",
+    "presence-gallery"
   ],
   "author": "fxckcode",
   "license": "MIT"

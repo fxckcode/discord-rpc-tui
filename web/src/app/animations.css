@@ -1,0 +1,96 @@
+/* ═══════════════════════════════════════════
+   Animations — Discord RPC Presence Gallery
+   ═══════════════════════════════════════════ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-6px) rotate(0.5deg);
+  }
+  66% {
+    transform: translateY(3px) rotate(-0.25deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Utility classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out both;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Stagger delay utilities */
+.stagger-delay-1 {
+  animation-delay: 0ms;
+}
+.stagger-delay-2 {
+  animation-delay: 100ms;
+}
+.stagger-delay-3 {
+  animation-delay: 200ms;
+}
+.stagger-delay-4 {
+  animation-delay: 300ms;
+}
+.stagger-delay-5 {
+  animation-delay: 400ms;
+}
+.stagger-delay-6 {
+  animation-delay: 500ms;
+}
+
+/* Global hover transitions */
+a,
+button {
+  transition: all 0.2s ease-out;
+}
+
+/* Shimmer utility */
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}

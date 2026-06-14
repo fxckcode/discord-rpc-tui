@@ -139,12 +139,47 @@ describe('handleSetActivity', () => {
     expect(callArgs.buttons).toHaveLength(2);
   });
 
+  it('should handle missing activity gracefully (empty args)', async () => {
+    const setActivity = vi.fn().mockResolvedValue(undefined);
+    const rpc = createMockRPCManager({ status: 'connected', setActivity });
+    const result = await handleSetActivity(rpc, {});
+    expect(setActivity).toHaveBeenCalled();
+    expect(result.isError).toBeFalsy();
+    expect((result.content[0] as any).text).toContain('successfully');
+  });
+
+  it('should handle undefined args for all optional fields', async () => {
+    const setActivity = vi.fn().mockResolvedValue(undefined);
+    const rpc = createMockRPCManager({ status: 'connected', setActivity });
+    const result = await handleSetActivity(rpc, {
+      state: undefined,
+      details: undefined,
+      name: undefined,
+      type: 'not-a-number',
+      startTimestamp: null,
+      buttons: 'not-an-array',
+    });
+    expect(setActivity).toHaveBeenCalledWith(
+      expect.objectContaining({}),
+      'mcp',
+    );
+    expect(result.isError).toBeFalsy();
+  });
+
   it('should return error when setActivity throws', async () => {
     const setActivity = vi.fn().mockRejectedValue(new Error('rate limited'));
     const rpc = createMockRPCManager({ status: 'connected', setActivity });
     const result = await handleSetActivity(rpc, { state: 'test' });
     expect(result.isError).toBe(true);
     expect((result.content[0] as any).text).toContain('rate limited');
+  });
+
+  it('should return error when setActivity rejects with unknown error', async () => {
+    const setActivity = vi.fn().mockRejectedValue('unknown rejection');
+    const rpc = createMockRPCManager({ status: 'connected', setActivity });
+    const result = await handleSetActivity(rpc, { state: 'testing' });
+    expect(result.isError).toBe(true);
+    expect((result.content[0] as any).text).toContain('Failed to set activity');
   });
 });
 

@@ -1,0 +1,334 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* ═══════════════════════════════════════════
+   Cursor Design System — Discord RPC Presence Gallery
+   Warm cream editorial canvas, Cursor Orange sparingly
+   ═══════════════════════════════════════════ */
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-canvas-soft: var(--canvas-soft);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-body-strong: var(--body-strong);
+  --color-muted: var(--muted);
+  --color-muted-soft: var(--muted-soft);
+  --color-hairline: var(--hairline);
+  --color-hairline-soft: var(--hairline-soft);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-primary: var(--primary);
+  --color-primary-active: var(--primary-active);
+  --color-on-primary: var(--on-primary);
+  --color-surface-card: var(--surface-card);
+  --color-surface-strong: var(--surface-strong);
+  --color-timeline-thinking: var(--timeline-thinking);
+  --color-timeline-grep: var(--timeline-grep);
+  --color-timeline-read: var(--timeline-read);
+  --color-timeline-edit: var(--timeline-edit);
+  --color-timeline-done: var(--timeline-done);
+  --color-semantic-success: var(--semantic-success);
+  --color-semantic-error: var(--semantic-error);
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px;
+  --font-sans:
+    var(--font-inter), system-ui, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), 'Fira Code', monospace;
+}
+
+:root {
+  /* Brand & Accent */
+  --primary: #f54e00;
+  --primary-active: #d04200;
+  --on-primary: #ffffff;
+
+  /* Surface */
+  --canvas: #f7f7f4;
+  --canvas-soft: #fafaf7;
+  --surface-card: #ffffff;
+  --surface-strong: #e6e5e0;
+
+  /* Hairlines */
+  --hairline: #e6e5e0;
+  --hairline-soft: #efeee8;
+  --hairline-strong: #cfcdc4;
+
+  /* Text */
+  --ink: #26251e;
+  --body: #5a5852;
+  --body-strong: #26251e;
+  --muted: #807d72;
+  --muted-soft: #a09c92;
+
+  /* Timeline (AI-action signature — for type badges) */
+  --timeline-thinking: #dfa88f;
+  --timeline-grep: #9fc9a2;
+  --timeline-read: #9fbbe0;
+  --timeline-edit: #c0a8dd;
+  --timeline-done: #c08532;
+
+  /* Semantic */
+  --semantic-success: #1f8a65;
+  --semantic-error: #cf2d56;
+}
+
+.dark {
+  --canvas: #0d0d0b;
+  --canvas-soft: #141412;
+  --surface-card: #1c1c18;
+  --surface-strong: #2a2a25;
+
+  --hairline: #2a2a25;
+  --hairline-soft: #22221e;
+  --hairline-strong: #353530;
+
+  --ink: #e8e5de;
+  --body: #a09c94;
+  --body-strong: #e8e5de;
+  --muted: #7a7770;
+  --muted-soft: #5a5852;
+}
+
+/* Dark mode canvas background — subtle radial glow */
+.dark body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(245, 78, 0, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(88, 101, 242, 0.03) 0%, transparent 60%);
+}
+
+/* Subtle noise texture overlay for dark mode */
+.dark body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+}
+
+@layer base {
+  * {
+    @apply border-hairline;
+  }
+
+  body {
+    @apply bg-canvas text-body antialiased transition-colors duration-300;
+    font-family: var(--font-sans);
+  }
+
+  /* Display text — magazine voice, weight 400, negative letter-spacing */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+}
+
+/* ═══ Utilities ═══ */
+
+@utility container-wide {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+@utility section-padding {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* Typography utilities */
+@utility display-mega {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+@utility display-lg {
+  font-family: var(--font-sans);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+@utility display-md {
+  font-family: var(--font-sans);
+  font-size: clamp(1.375rem, 2vw, 1.625rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+@utility display-sm {
+  font-family: var(--font-sans);
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.007em;
+  color: var(--ink);
+}
+
+@utility title-md {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+@utility title-sm {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+@utility body-md {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+@utility body-sm {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+@utility caption-uppercase {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+@utility nav-link {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--body);
+  transition: color 0.15s ease;
+}
+
+@utility nav-link_active {
+  color: var(--ink);
+}
+
+/* Button utilities */
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  transition: background-color 0.15s ease;
+  cursor: pointer;
+}
+
+@utility btn-primary_active {
+  background-color: var(--primary-active);
+}
+
+/* Button utilities */
+@utility btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 17px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-card);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  border: 1px solid var(--hairline-strong);
+  transition: border-color 0.15s ease;
+  cursor: pointer;
+}
+
+@utility btn-secondary_active {
+  border-color: var(--hairline);
+}
+
+@utility btn-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: var(--ink);
+  color: var(--canvas);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  transition: opacity 0.15s ease;
+  cursor: pointer;
+}
+
+@utility btn-download_active {
+  opacity: 0.9;
+}
+
+/* Card utilities */
+@utility card {
+  background-color: var(--surface-card);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+}
+
+@utility hairline-top {
+  border-top: 1px solid var(--hairline);
+}
+
+@utility hairline-bottom {
+  border-bottom: 1px solid var(--hairline);
+}
