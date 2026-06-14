@@ -7,7 +7,12 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   dts: false,
-  external: [/node_modules/],
+  external: [
+    'crypto',
+  ],
+  banner: {
+    js: "import { createRequire } from 'module';const require = createRequire(import.meta.url);",
+  },
   platform: 'node',
   target: 'node22',
 });
