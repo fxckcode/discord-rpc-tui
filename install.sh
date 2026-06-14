@@ -15,14 +15,25 @@ pnpm build
 # Install files
 mkdir -p "$BIN_DIR"
 cp -r dist "$INSTALL_DIR/"
-cp package.json "$INSTALL_DIR/"
+cp package.json pnpm-lock.yaml "$INSTALL_DIR/" 2>/dev/null || true
 
-# Create wrapper (auto-detects project path at install time)
+# Install production dependencies in the install dir (needed for externals like @modelcontextprotocol/sdk)
+if command -v pnpm &>/dev/null; then
+  echo "Installing production dependencies..."
+  cd "$INSTALL_DIR" && pnpm install --prod --frozen-lockfile 2>/dev/null || pnpm install --prod 2>/dev/null || true
+elif command -v npm &>/dev/null; then
+  cd "$INSTALL_DIR" && npm install --omit=dev 2>/dev/null || true
+fi
+cd "$SCRIPT_DIR"
+
+# Create wrapper (points to INSTALL_DIR — survives deleting the clone)
 cat > "$BIN_DIR/rpc-tui" << WRAPPER
 #!/usr/bin/env bash
 set -euo pipefail
-PROJECT_DIR="$SCRIPT_DIR"
-cd "\$PROJECT_DIR"
+if [ -d "${HOME}/.hermes/node/bin" ]; then
+  export PATH="${HOME}/.hermes/node/bin:\${PATH}"
+fi
+cd "$INSTALL_DIR"
 exec node dist/index.js "\$@"
 WRAPPER
 chmod +x "$BIN_DIR/rpc-tui"
