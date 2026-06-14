@@ -118,9 +118,12 @@ export class RPCManager extends EventEmitter {
     if (finalActivity.buttons && finalActivity.buttons.length > 0) {
       rpcActivity.buttons = finalActivity.buttons.slice(0, 2);
     }
+    // instance must be false for non-game activities
+    rpcActivity.instance = false;
 
     try {
       await this.client.user?.setActivity(rpcActivity);
+
       this.emit('activity-set', profileName ?? 'unknown');
     } catch (error) {
       this.emit('error', error as Error);
