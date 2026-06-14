@@ -41,6 +41,11 @@ export function App({ configManager, rpcManager, discordDetector }: AppProps) {
     configManager.load()
       .then((cfg) => {
         setConfig(cfg);
+        rpcManager.setRepoButtonConfig({
+          showRepoButton: cfg.showRepoButton ?? true,
+          repoUrl: cfg.repoUrl ?? 'https://github.com/fxckcode/discord-rpc-tui',
+          repoButtonLabel: cfg.repoButtonLabel ?? 'View on GitHub',
+        });
         addLog(`Config loaded: ${cfg.profiles.length} profiles`);
       })
       .catch((error) => {
@@ -146,6 +151,11 @@ export function App({ configManager, rpcManager, discordDetector }: AppProps) {
       configManager.load()
         .then((cfg) => {
           setConfig(cfg);
+          rpcManager.setRepoButtonConfig({
+            showRepoButton: cfg.showRepoButton ?? true,
+            repoUrl: cfg.repoUrl ?? 'https://github.com/fxckcode/discord-rpc-tui',
+            repoButtonLabel: cfg.repoButtonLabel ?? 'View on GitHub',
+          });
           addLog('Config reloaded');
         })
         .catch((error) => addLog(`Reload failed: ${error.message}`));
@@ -174,7 +184,10 @@ export function App({ configManager, rpcManager, discordDetector }: AppProps) {
             <Text>  State: {config.profiles[currentProfile].activity.state || '(none)'}</Text>
             <Text>  Details: {config.profiles[currentProfile].activity.details || '(none)'}</Text>
             {config.profiles[currentProfile].activity.buttons && (
-              <Text>  Buttons: {config.profiles[currentProfile].activity.buttons!.length}</Text>
+              <Text>  Buttons: {config.profiles[currentProfile].activity.buttons!.length}{config.showRepoButton !== false && (config.profiles[currentProfile].activity.buttons?.length ?? 0) < 2 ? ' + repo' : ''}</Text>
+            )}
+            {config.showRepoButton !== false && !config.profiles[currentProfile].activity.buttons && (
+              <Text>  Button: repo link</Text>
             )}
           </Box>
         )}

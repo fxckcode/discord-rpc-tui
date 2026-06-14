@@ -39,6 +39,13 @@ if (isMcpMode) {
     const config = await configManager.load();
     log(`Config loaded: ${config.profiles.length} profiles`);
 
+    // Configure repo button (auto-injected by RPCManager.setActivity)
+    rpcManager.setRepoButtonConfig({
+      showRepoButton: config.showRepoButton ?? true,
+      repoUrl: config.repoUrl ?? 'https://github.com/fxckcode/discord-rpc-tui',
+      repoButtonLabel: config.repoButtonLabel ?? 'View on GitHub',
+    });
+
     // Auto-connect to Discord
     rpcManager.connect(config.clientId).catch((err) => {
       log(`Connection failed: ${err.message} (will retry)`);
@@ -89,6 +96,13 @@ if (isMcpMode) {
 
     const config = await configManager.load();
     console.log(`[rpc-tui] Config loaded: ${config.profiles.length} profiles`);
+
+    // Configure repo button (auto-injected by RPCManager.setActivity)
+    rpcManager.setRepoButtonConfig({
+      showRepoButton: config.showRepoButton ?? true,
+      repoUrl: config.repoUrl ?? 'https://github.com/fxckcode/discord-rpc-tui',
+      repoButtonLabel: config.repoButtonLabel ?? 'View on GitHub',
+    });
 
     rpcManager.on('connected', () => {
       console.log('[rpc-tui] Connected to Discord');

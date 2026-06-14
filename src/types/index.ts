@@ -21,11 +21,20 @@ export interface Profile {
   activity: ActivityConfig;
 }
 
+export interface RepoButtonConfig {
+  showRepoButton: boolean;
+  repoUrl: string;
+  repoButtonLabel: string;
+}
+
 export interface Config {
   clientId: string;
   transport: 'ipc' | 'websocket';
   profiles: Profile[];
   rotationInterval: number;
+  showRepoButton?: boolean;
+  repoUrl?: string;
+  repoButtonLabel?: string;
 }
 
 export type ConnectionStatus =

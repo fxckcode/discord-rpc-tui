@@ -31,8 +31,8 @@ export async function startDiscordRpcMcpServer(
 ): Promise<void> {
   const mcpServer = new McpServer(
     {
-      name: 'discord-rpc-tui',
-      version: '0.1.0',
+      name: 'engineering-reality',
+      version: '0.2.0',
     },
     {
       capabilities: {

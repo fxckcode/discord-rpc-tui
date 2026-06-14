@@ -31,6 +31,9 @@ const ConfigSchema = z.object({
   transport: z.enum(['ipc', 'websocket']).default('ipc'),
   profiles: z.array(ProfileSchema).min(1, 'At least one profile is required'),
   rotationInterval: z.number().min(0).default(300),
+  showRepoButton: z.boolean().default(true),
+  repoUrl: z.string().url().default('https://github.com/fxckcode/discord-rpc-tui'),
+  repoButtonLabel: z.string().default('View on GitHub'),
 });
 
 const DEFAULT_CONFIG_PATH = join(homedir(), '.config', 'discord-rpc-tui', 'config.json');
@@ -59,6 +62,9 @@ const DEFAULT_CONFIG: Config = {
     },
   ],
   rotationInterval: 600,
+  showRepoButton: true,
+  repoUrl: 'https://github.com/fxckcode/discord-rpc-tui',
+  repoButtonLabel: 'View on GitHub',
 };
 
 export class ConfigManager {

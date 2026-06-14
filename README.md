@@ -10,6 +10,7 @@
 - 🔄 **Activity Rotation** — set multiple profiles that rotate automatically
 - 🔗 **Auto-reconnect** — survives Discord restarts with exponential backoff
 - 📋 **Rich Presence** — state, details, timestamps, buttons (max 2), images, activity type
+- ⭐ **Repo Button** — auto-injects a "View on GitHub" button (configurable, enabled by default)
 - ⚙️ **Configurable** — JSON config at `~/.config/discord-rpc-tui/config.json`
 - 🚀 **Auto-start** — systemd user service, starts when you log in
 - 🔍 **Discord Detection** — automatically pauses when Discord is closed
@@ -90,7 +91,10 @@ Located at `~/.config/discord-rpc-tui/config.json`:
       }
     }
   ],
-  "rotationInterval": 600
+  "rotationInterval": 600,
+  "showRepoButton": true,
+  "repoUrl": "https://github.com/fxckcode/discord-rpc-tui",
+  "repoButtonLabel": "⭐ View on GitHub"
 }
 ```
 
@@ -101,6 +105,9 @@ Located at `~/.config/discord-rpc-tui/config.json`:
 | `clientId` | string | Discord Application ID (required) |
 | `transport` | "ipc" \| "websocket" | RPC transport (default: ipc) |
 | `rotationInterval` | number | Seconds between profile rotation (0 = no rotation) |
+| `showRepoButton` | boolean | Show a "View on GitHub" button linking back to the repo (default: true) |
+| `repoUrl` | string | Custom repo URL for the button (default: https://github.com/fxckcode/discord-rpc-tui) |
+| `repoButtonLabel` | string | Custom label for the repo button (default: "View on GitHub") |
 | `profiles[]` | array | Array of activity profiles |
 | `profiles[].name` | string | Profile display name |
 | `profiles[].activity.state` | string | Line 1 of rich presence |

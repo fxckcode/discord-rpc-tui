@@ -1,6 +1,7 @@
 import { EventEmitter } from 'node:events';
 import { Client } from '@xhayper/discord-rpc';
-import type { ActivityConfig, ConnectionStatus } from '../types/index.js';
+import type { ActivityConfig, ConnectionStatus, RepoButtonConfig } from '../types/index.js';
+import { injectRepoButton } from './activity-utils.js';
 
 export declare interface RPCManager {
   on(event: 'connected', listener: () => void): this;
@@ -19,6 +20,7 @@ export class RPCManager extends EventEmitter {
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private destroyed = false;
   private _status: ConnectionStatus = 'disconnected';
+  private repoButtonConfig: RepoButtonConfig | null = null;
 
   get status(): ConnectionStatus {
     return this._status;
@@ -27,6 +29,10 @@ export class RPCManager extends EventEmitter {
   private setStatus(status: ConnectionStatus): void {
     this._status = status;
     this.emit('status-change', status);
+  }
+
+  setRepoButtonConfig(config: RepoButtonConfig | null): void {
+    this.repoButtonConfig = config;
   }
 
   async connect(clientId: string): Promise<void> {
@@ -64,50 +70,53 @@ export class RPCManager extends EventEmitter {
       throw new Error('Not connected to Discord');
     }
 
+    // Inject repo button if configured (respects Discord's 2-button max)
+    const finalActivity = injectRepoButton(activity, this.repoButtonConfig);
+
     const rpcActivity: Record<string, unknown> = {};
 
     // name is the title shown on Discord (e.g., "Playing {name}")
-    if (activity.name) rpcActivity.name = activity.name;
-    if (activity.state) rpcActivity.state = activity.state;
-    if (activity.details) rpcActivity.details = activity.details;
-    if (activity.type !== undefined) rpcActivity.type = activity.type;
+    if (finalActivity.name) rpcActivity.name = finalActivity.name;
+    if (finalActivity.state) rpcActivity.state = finalActivity.state;
+    if (finalActivity.details) rpcActivity.details = finalActivity.details;
+    if (finalActivity.type !== undefined) rpcActivity.type = finalActivity.type;
 
     // Handle timestamps
-    if (activity.startTimestamp === true) {
+    if (finalActivity.startTimestamp === true) {
       rpcActivity.startTimestamp = Date.now();
-    } else if (typeof activity.startTimestamp === 'number') {
-      rpcActivity.startTimestamp = activity.startTimestamp;
+    } else if (typeof finalActivity.startTimestamp === 'number') {
+      rpcActivity.startTimestamp = finalActivity.startTimestamp;
     }
-    if (activity.endTimestamp) {
-      rpcActivity.endTimestamp = activity.endTimestamp;
+    if (finalActivity.endTimestamp) {
+      rpcActivity.endTimestamp = finalActivity.endTimestamp;
     }
 
     // Assets
     // largeImageKey: uploaded asset name from Dev Portal
     // largeImageUrl: external URL (auto-converted to mp:external/ for Discord RPC)
-    if (activity.largeImageUrl) {
+    if (finalActivity.largeImageUrl) {
       // External URL → use mp:external/ prefix
-      const url = activity.largeImageUrl.startsWith('http')
-        ? `mp:external/${activity.largeImageUrl}`
-        : activity.largeImageUrl;
+      const url = finalActivity.largeImageUrl.startsWith('http')
+        ? `mp:external/${finalActivity.largeImageUrl}`
+        : finalActivity.largeImageUrl;
       rpcActivity.largeImageKey = url;
-    } else if (activity.largeImageKey) {
-      rpcActivity.largeImageKey = activity.largeImageKey;
+    } else if (finalActivity.largeImageKey) {
+      rpcActivity.largeImageKey = finalActivity.largeImageKey;
     }
-    if (activity.largeImageText) rpcActivity.largeImageText = activity.largeImageText;
-    if (activity.smallImageUrl) {
-      const url = activity.smallImageUrl.startsWith('http')
-        ? `mp:external/${activity.smallImageUrl}`
-        : activity.smallImageUrl;
+    if (finalActivity.largeImageText) rpcActivity.largeImageText = finalActivity.largeImageText;
+    if (finalActivity.smallImageUrl) {
+      const url = finalActivity.smallImageUrl.startsWith('http')
+        ? `mp:external/${finalActivity.smallImageUrl}`
+        : finalActivity.smallImageUrl;
       rpcActivity.smallImageKey = url;
-    } else if (activity.smallImageKey) {
-      rpcActivity.smallImageKey = activity.smallImageKey;
+    } else if (finalActivity.smallImageKey) {
+      rpcActivity.smallImageKey = finalActivity.smallImageKey;
     }
-    if (activity.smallImageText) rpcActivity.smallImageText = activity.smallImageText;
+    if (finalActivity.smallImageText) rpcActivity.smallImageText = finalActivity.smallImageText;
 
     // Buttons (max 2)
-    if (activity.buttons && activity.buttons.length > 0) {
-      rpcActivity.buttons = activity.buttons.slice(0, 2);
+    if (finalActivity.buttons && finalActivity.buttons.length > 0) {
+      rpcActivity.buttons = finalActivity.buttons.slice(0, 2);
     }
 
     try {

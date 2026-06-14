@@ -1,7 +1,7 @@
 {
   "name": "discord-rpc-tui",
   "version": "0.1.0",
-  "description": "Custom Discord Rich Presence manager with a beautiful Ink TUI",
+  "description": "MCP server & Ink TUI — forge Discord Rich Presence with the elegance of engineering and the mind of AI",
   "type": "module",
   "main": "dist/index.js",
   "bin": {

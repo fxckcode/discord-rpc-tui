@@ -212,4 +212,92 @@ describe('RPCManager', () => {
     const args = currentClient!.user.setActivity.mock.calls[0][0];
     expect(args.smallImageKey).toBe('mp:external/https://example.com/small.png');
   });
+
+  // ── Repo button auto-inject ──
+
+  it('should inject repo button when no custom buttons', async () => {
+    await connectAndEmitReady();
+    manager.setRepoButtonConfig({
+      showRepoButton: true,
+      repoUrl: 'https://github.com/test/repo',
+      repoButtonLabel: 'View Repo',
+    });
+    await manager.setActivity({ state: 'test' });
+    const args = currentClient!.user.setActivity.mock.calls[0][0];
+    expect(args.buttons).toHaveLength(1);
+    expect(args.buttons[0]).toEqual({ label: 'View Repo', url: 'https://github.com/test/repo' });
+  });
+
+  it('should inject repo button as second slot when 1 custom button', async () => {
+    await connectAndEmitReady();
+    manager.setRepoButtonConfig({
+      showRepoButton: true,
+      repoUrl: 'https://github.com/test/repo',
+      repoButtonLabel: 'View Repo',
+    });
+    await manager.setActivity({
+      state: 'test',
+      buttons: [{ label: 'Custom', url: 'https://example.com' }],
+    });
+    const args = currentClient!.user.setActivity.mock.calls[0][0];
+    expect(args.buttons).toHaveLength(2);
+    expect(args.buttons[0]).toEqual({ label: 'Custom', url: 'https://example.com' });
+    expect(args.buttons[1]).toEqual({ label: 'View Repo', url: 'https://github.com/test/repo' });
+  });
+
+  it('should NOT inject repo button when already 2 custom buttons', async () => {
+    await connectAndEmitReady();
+    manager.setRepoButtonConfig({
+      showRepoButton: true,
+      repoUrl: 'https://github.com/test/repo',
+      repoButtonLabel: 'View Repo',
+    });
+    await manager.setActivity({
+      state: 'test',
+      buttons: [
+        { label: 'A', url: 'https://a.com' },
+        { label: 'B', url: 'https://b.com' },
+      ],
+    });
+    const args = currentClient!.user.setActivity.mock.calls[0][0];
+    expect(args.buttons).toHaveLength(2);
+    expect(args.buttons[0].url).toBe('https://a.com');
+    expect(args.buttons[1].url).toBe('https://b.com');
+  });
+
+  it('should NOT inject repo button when showRepoButton is false', async () => {
+    await connectAndEmitReady();
+    manager.setRepoButtonConfig({
+      showRepoButton: false,
+      repoUrl: 'https://github.com/test/repo',
+      repoButtonLabel: 'View Repo',
+    });
+    await manager.setActivity({ state: 'test' });
+    const args = currentClient!.user.setActivity.mock.calls[0][0];
+    expect(args.buttons).toBeUndefined();
+  });
+
+  it('should dedup repo button when URL already exists in custom buttons', async () => {
+    await connectAndEmitReady();
+    manager.setRepoButtonConfig({
+      showRepoButton: true,
+      repoUrl: 'https://github.com/test/repo',
+      repoButtonLabel: 'View Repo',
+    });
+    await manager.setActivity({
+      state: 'test',
+      buttons: [{ label: 'Already Here', url: 'https://github.com/test/repo' }],
+    });
+    const args = currentClient!.user.setActivity.mock.calls[0][0];
+    expect(args.buttons).toHaveLength(1);
+    expect(args.buttons[0].label).toBe('Already Here');
+  });
+
+  it('should NOT inject repo button when repoButtonConfig is null', async () => {
+    await connectAndEmitReady();
+    // repoButtonConfig is null by default
+    await manager.setActivity({ state: 'test' });
+    const args = currentClient!.user.setActivity.mock.calls[0][0];
+    expect(args.buttons).toBeUndefined();
+  });
 });
