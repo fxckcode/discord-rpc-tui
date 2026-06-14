@@ -2,6 +2,7 @@
 
 import { render } from 'ink';
 import React from 'react';
+import { execSync } from 'child_process';
 import { App } from './app.js';
 import type { ActivityConfig } from './types/index.js';
 import { ConfigManager } from './core/config-manager.js';
@@ -37,6 +38,17 @@ if (isSetActivity) {
     process.exit(1);
   }
 
+  // Try to stop running service
+  let hadService = false;
+  try {
+    execSync('systemctl --user is-active discord-rpc-tui 2>/dev/null', { stdio: 'ignore' });
+    console.error('[rpc-tui] Stopping running service...');
+    execSync('systemctl --user stop discord-rpc-tui', { stdio: 'ignore' });
+    hadService = true;
+  } catch {
+    // Service not running, proceed
+  }
+
   try {
     const config = await configManager.load();
 
@@ -50,9 +62,27 @@ if (isSetActivity) {
     await rpcManager.connect(config.clientId);
     console.error('[rpc-tui] Connected. Setting activity...');
     await rpcManager.setActivity(activity, 'cli');
-    console.error('[rpc-tui] Activity set.');
-    await rpcManager.destroy();
-    process.exit(0);
+    console.error('[rpc-tui] \u2714 Activity set!');
+    console.error('[rpc-tui] Press Ctrl+C to stop (activity stays while running).');
+
+    // Keep alive — don't disconnect, or the activity disappears
+    process.on('SIGINT', async () => {
+      console.error('');
+      console.error('[rpc-tui] Disconnecting...');
+      await rpcManager.destroy();
+      if (hadService) {
+        console.error('[rpc-tui] Restart the service anytime:');
+        console.error('  systemctl --user start discord-rpc-tui');
+      }
+      process.exit(0);
+    });
+
+    process.on('SIGTERM', async () => {
+      await rpcManager.destroy();
+      process.exit(0);
+    });
+
+    await new Promise(() => {});
   } catch (err) {
     console.error(`[rpc-tui] Error: ${(err as Error).message}`);
     await rpcManager.destroy().catch(() => {});
