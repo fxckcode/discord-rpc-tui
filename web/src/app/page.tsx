@@ -112,6 +112,13 @@ export default function HomePage() {
               >
                 Learn More
               </a>
+              <Link
+                href="/docs"
+                className="inline-flex items-center gap-1 text-sm font-medium no-underline hover:underline"
+                style={{ color: 'var(--muted)' }}
+              >
+                Read the Docs →
+              </Link>
             </div>
           </div>
         </div>
@@ -263,6 +270,18 @@ export default function HomePage() {
         </div>
       </section>
 
+
+      {/* ═══ Docs Callout ═══ */}
+      <section className="border-t border-hairline bg-canvas-soft">
+        <div className="container-wide py-16 text-center">
+          <p className="body-md mb-6 text-muted">
+            Need help setting up? Check the documentation for step-by-step guides.
+          </p>
+          <Link href="/docs" className="btn-primary no-underline">
+            Visit Docs →
+          </Link>
+        </div>
+      </section>
 
       <section id="features" className="section-padding bg-canvas">
         <div className="container-wide">

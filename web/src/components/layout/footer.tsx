@@ -29,6 +29,12 @@ export function Footer() {
             >
               Gallery
             </Link>
+            <Link
+              href="/docs"
+              className="body-sm text-muted hover:text-ink no-underline"
+            >
+              Docs
+            </Link>
           </div>
         </div>
 
