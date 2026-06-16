@@ -1,5 +1,5 @@
 {
-  "name": "discord-rpc-tui",
+  "name": "@rpc-discord/discord-rpc-tui",
   "version": "0.4.0",
   "description": "MCP server, TUI, and web gallery — forge Discord Rich Presence with elegance and AI",
   "type": "module",
@@ -7,6 +7,12 @@
   "bin": {
     "rpc-tui": "dist/index.js"
   },
+  "files": [
+    "dist",
+    "systemd",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsup src/index.tsx --out-dir dist --format esm --clean",
     "build:web": "cd web && pnpm build",
@@ -17,7 +23,19 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:web": "cd web && pnpm test",
-    "version": "node -p \"require('./package.json').version\""
+    "version": "node -p \"require('./package.json').version\"",
+    "prepublishOnly": "pnpm build"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fxckcode/discord-rpc-tui.git"
+  },
+  "homepage": "https://github.com/fxckcode/discord-rpc-tui#readme",
+  "bugs": {
+    "url": "https://github.com/fxckcode/discord-rpc-tui/issues"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
@@ -42,7 +60,9 @@
     "rpc",
     "tui",
     "ink",
-    "presence-gallery"
+    "mcp",
+    "presence-gallery",
+    "model-context-protocol"
   ],
   "author": "fxckcode",
   "license": "MIT"

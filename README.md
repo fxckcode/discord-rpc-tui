@@ -1,8 +1,8 @@
-# Discord RPC TUI
+# Engineering Reality
 
-**Custom Discord Rich Presence manager** — a beautiful Terminal UI built with [Ink](https://github.com/vadimdemedes/ink) (React for terminal) that sets custom activities on your Discord profile.
+**Discord Rich Presence TUI + MCP Server** — forge your Discord Rich Presence with the elegance of engineering and the mind of AI.
 
-![TUI Screenshot](docs/screenshot.png)
+![Logo](docs/logo.svg)
 
 ## Features
 

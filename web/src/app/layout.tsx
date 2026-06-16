@@ -20,9 +20,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Presence Gallery — Beautiful Discord Rich Presences',
+  title: 'Engineering Reality — Discord Rich Presence Gallery',
   description:
-    'Browse and apply beautiful Rich Presences to your Discord profile with one terminal command.'
+    'Browse, discover, and apply beautiful Rich Presences to your Discord profile with one terminal command.',
+  icons: {
+    icon: '/icon.svg'
+  }
 };
 
 export default function RootLayout({
