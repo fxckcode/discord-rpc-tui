@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   description:
     'Browse and apply beautiful Rich Presences to your Discord profile with a single terminal command. Craft your presence.',
-  metadataBase: new URL('https://rpcraft.sh'),
+  metadataBase: new URL('https://discord-rpc-tui.vercel.app'),
   applicationName: 'RPCraft',
   keywords: [
     'rpcraft',
@@ -39,6 +39,14 @@ export const metadata: Metadata = {
     'presence gallery',
     'craft your presence',
   ],
+  icons: {
+    icon: '/icon.svg',
+    apple: '/icon.svg',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -46,19 +54,14 @@ export const metadata: Metadata = {
     title: 'RPCraft — Craft your Discord Presence',
     description:
       'Browse and apply beautiful Rich Presences to your Discord profile with a single terminal command.',
+    images: [{ url: '/og.svg', width: 512, height: 512 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'RPCraft — Craft your Discord Presence',
     description:
       'Browse and apply beautiful Rich Presences to your Discord profile with a single terminal command.',
-  },
-  icons: {
-    icon: '/icon.svg',
-  },
-  robots: {
-    index: true,
-    follow: true,
+    images: ['/og.svg'],
   },
 };
 
@@ -70,6 +73,39 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'RPCraft',
+              url: 'https://discord-rpc-tui.vercel.app',
+              description: 'Browse and apply beautiful Rich Presences to your Discord profile with a single terminal command.',
+              applicationCategory: 'Multimedia',
+              operatingSystem: 'Linux, macOS, Windows',
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'SoftwareApplication',
+              name: 'RPCraft',
+              url: 'https://discord-rpc-tui.vercel.app',
+              description: 'Craft your Discord Presence. CLI, TUI, web gallery, and MCP server for Discord Rich Presence.',
+              applicationCategory: 'UtilitiesApplication',
+              operatingSystem: 'Linux, macOS, Windows',
+              offers: {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
+              },
+            })
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark')}catch(e){}})()`
