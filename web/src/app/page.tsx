@@ -150,7 +150,7 @@ export default function HomePage() {
 
           <div className="mx-auto grid max-w-4xl gap-5 md:grid-cols-3">
             {/* Step 1 */}
-            <div className="relative text-center">
+            <div className="relative text-center min-w-0">
               <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-ink">
                 <span className="text-sm font-medium text-canvas">1</span>
               </div>
@@ -167,7 +167,7 @@ export default function HomePage() {
                 </a>{' '}
                 — the terminal tool that powers your Rich Presence.
               </p>
-              <div className="card overflow-hidden text-left text-[11px]">
+              <div className="card text-left text-[11px]">
                 <pre className="overflow-x-auto p-3 font-mono leading-relaxed text-ink">
                   <span className="text-muted"># One command to install</span>{'\n'}
                   <span className="text-semantic-success">$</span> git clone https://github.com/fxckcode/discord-rpc-tui.git{'\n'}
@@ -179,7 +179,7 @@ export default function HomePage() {
             </div>
 
             {/* Step 2 */}
-            <div className="relative text-center">
+            <div className="relative text-center min-w-0">
               <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-ink">
                 <span className="text-sm font-medium text-canvas">2</span>
               </div>
@@ -239,7 +239,7 @@ export default function HomePage() {
             </div>
 
             {/* Step 3 */}
-            <div className="relative text-center">
+            <div className="relative text-center min-w-0">
               <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-ink">
                 <span className="text-sm font-medium text-canvas">3</span>
               </div>
@@ -247,7 +247,7 @@ export default function HomePage() {
               <p className="body-sm mb-4 text-muted">
                 Copy the terminal command from any presence page and paste it. Your Discord updates instantly.
               </p>
-              <div className="card overflow-hidden text-left text-[11px]">
+              <div className="card text-left text-[11px]">
                 <pre className="overflow-x-auto p-3 font-mono leading-relaxed text-ink">
                   <span className="text-muted"># Copy &amp; paste this</span>{'\n'}
                   <span className="text-semantic-success">$</span> rpc-tui set-activity '{'\n'}
