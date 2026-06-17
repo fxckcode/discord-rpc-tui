@@ -2,8 +2,6 @@
 
 **Craft your Discord Presence** — CLI, TUI, web gallery, and MCP server for Discord Rich Presence.
 
-![Logo](docs/logo.svg)
-
 ## Features
 
 - 🎨 **Beautiful TUI** — built with Ink (React), full keyboard navigation
