@@ -68,7 +68,7 @@ export default function DocsPage() {
             <div>
               <p className="title-sm mb-3">1. Install</p>
               <TerminalBlock>
-                <span className="text-semantic-success">$</span> git clone https://github.com/yourusername/discord-rpc-tui.git<br />
+                <span className="text-semantic-success">$</span> git clone https://github.com/fxckcode/discord-rpc-tui.git<br />
                 <span className="text-semantic-success">$</span> cd discord-rpc-tui<br />
                 <span className="text-semantic-success">$</span> bash install.sh
               </TerminalBlock>

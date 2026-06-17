@@ -170,7 +170,7 @@ export default function HomePage() {
               <div className="card text-left text-[11px]">
                 <pre className="overflow-x-auto p-3 font-mono leading-relaxed text-ink">
                   <span className="text-muted"># One command to install</span>{'\n'}
-                  <span className="text-semantic-success">$</span> git clone https://github.com/fxckcode/discord-rpc-tui.git{'\n'}
+                  <span className="text-semantic-success">$</span> git clone https://github.com/fxckcode/discord-rpc-tui.git{'\\n'}
                   <span className="text-semantic-success">$</span> cd discord-rpc-tui && bash install.sh{'\n'}
                   <span className="text-muted"># Start the server</span>{'\n'}
                   <span className="text-semantic-success">$</span> rpc-tui mcp
