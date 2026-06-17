@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { presences } from '@/data/presences';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://discord-rpc-tui.vercel.app';
+  const baseUrl = 'https://rpcraft.cloud';
 
   const staticPages = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 1 },

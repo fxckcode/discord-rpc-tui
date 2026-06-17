@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   description:
     'Browse and apply beautiful Rich Presences to your Discord profile with a single terminal command. Craft your presence.',
-  metadataBase: new URL('https://discord-rpc-tui.vercel.app'),
+  metadataBase: new URL('https://rpcraft.cloud'),
   applicationName: 'RPCraft',
   keywords: [
     'rpcraft',
@@ -80,7 +80,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'RPCraft',
-              url: 'https://discord-rpc-tui.vercel.app',
+              url: 'https://rpcraft.cloud',
               description: 'Browse and apply beautiful Rich Presences to your Discord profile with a single terminal command.',
               applicationCategory: 'Multimedia',
               operatingSystem: 'Linux, macOS, Windows',
@@ -94,7 +94,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'SoftwareApplication',
               name: 'RPCraft',
-              url: 'https://discord-rpc-tui.vercel.app',
+              url: 'https://rpcraft.cloud',
               description: 'Craft your Discord Presence. CLI, TUI, web gallery, and MCP server for Discord Rich Presence.',
               applicationCategory: 'UtilitiesApplication',
               operatingSystem: 'Linux, macOS, Windows',

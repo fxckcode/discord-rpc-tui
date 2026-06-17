@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: '/_next/',
       },
     ],
-    sitemap: 'https://discord-rpc-tui.vercel.app/sitemap.xml',
+    sitemap: 'https://rpcraft.cloud/sitemap.xml',
   };
 }
