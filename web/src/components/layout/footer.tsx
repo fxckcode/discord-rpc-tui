@@ -52,7 +52,7 @@ export function Footer() {
               GitHub
             </a>
             <a
-              href="https://linktr.ee/fxckcode"
+              href="https://linktree.diegoduran.site/"
               target="_blank"
               rel="noopener noreferrer"
               className="body-sm text-muted hover:text-ink no-underline inline-flex items-center gap-2"
@@ -63,7 +63,7 @@ export function Footer() {
             <p className="text-muted-soft mt-2 text-xs">
               Built by{' '}
               <a
-                href="https://linktr.ee/fxckcode"
+                href="https://linktree.diegoduran.site/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted hover:text-ink underline underline-offset-2"
