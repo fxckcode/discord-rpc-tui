@@ -432,6 +432,200 @@ export default function DocsPage() {
 
           <hr className="border-hairline my-14" />
 
+          {/* Section 6: AI Agent Integration (MCP) */}
+          <SectionHeading id="mcp-integration">AI Agent Integration (MCP)</SectionHeading>
+          <div className="body-md space-y-5 mb-8">
+            <p>
+              RPCraft includes a{' '}
+              <a
+                href="https://modelcontextprotocol.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                Model Context Protocol
+              </a>{' '}
+              (MCP) server that lets AI coding agents control your Discord Rich Presence
+              programmatically. Your agent can set activities, switch profiles, and check
+              connection status — all through natural language.
+            </p>
+
+            <div className="card p-5 !border-primary/20 !bg-primary/[0.02]">
+              <p className="title-sm mb-1">Start the MCP server</p>
+              <p className="text-muted mb-3">
+                First, make sure the service is running, then start the MCP server:
+              </p>
+              <TerminalBlock>
+                <span className="text-semantic-success">$</span> rpc-tui mcp
+              </TerminalBlock>
+              <p className="text-muted text-sm">
+                This starts the server in <strong>stdio</strong> mode — the default for CLI agents.
+                For HTTP clients, use{' '}
+                <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">rpc-tui mcp --sse --port 3100</code>.
+              </p>
+            </div>
+
+            <div>
+              <p className="title-sm mb-3">Setup by agent</p>
+
+              <div className="space-y-4">
+                <div className="card p-5">
+                  <p className="title-sm mb-1">Hermes Agent</p>
+                  <p className="text-muted mb-2">
+                    Add as an MCP server via the CLI:
+                  </p>
+                  <TerminalBlock>
+                    <span className="text-semantic-success">$</span> hermes mcp add rpcraft --command &quot;rpc-tui mcp&quot;<br />
+                    <span className="text-semantic-success">$</span> hermes mcp test rpcraft
+                  </TerminalBlock>
+                  <p className="text-muted-soft text-sm">
+                    Or add it to{' '}
+                    <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">~/.hermes/config.yaml</code>:
+                  </p>
+                  <ConfigBlock>
+{`mcp:
+  servers:
+    rpcraft:
+      command: rpc-tui
+      args: [mcp]`}
+                  </ConfigBlock>
+                  <p className="text-muted-soft text-sm mt-2">
+                    After adding, tell Hermes: &quot;Set my Discord presence to Coding in TypeScript&quot;.
+                  </p>
+                </div>
+
+                <div className="card p-5">
+                  <p className="title-sm mb-1">Claude Code</p>
+                  <p className="text-muted mb-2">
+                    Add to your project&apos;s{' '}
+                    <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">CLAUDE.md</code> or global config:
+                  </p>
+                  <ConfigBlock>
+{`{
+  "mcpServers": {
+    "rpcraft": {
+      "command": "rpc-tui",
+      "args": ["mcp"]
+    }
+  }
+}`}
+                  </ConfigBlock>
+                  <p className="text-muted-soft text-sm mt-2">
+                    Claude Code discovers MCP tools automatically. Try: &quot;Update my Discord status to show I&apos;m coding&quot;.
+                  </p>
+                </div>
+
+                <div className="card p-5">
+                  <p className="title-sm mb-1">Codex CLI / OpenCode</p>
+                  <p className="text-muted mb-2">
+                    Add the MCP server in{' '}
+                    <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">opencode.json</code>:
+                  </p>
+                  <ConfigBlock>
+{`{
+  "mcpServers": {
+    "rpcraft": {
+      "command": "rpc-tui",
+      "args": ["mcp"]
+    }
+  }
+}`}
+                  </ConfigBlock>
+                  <p className="text-muted-soft text-sm">
+                    Both Codex CLI and OpenCode follow the same format.
+                  </p>
+                </div>
+
+                <div className="card p-5">
+                  <p className="title-sm mb-1">Cursor</p>
+                  <p className="text-muted mb-2">
+                    Add to{' '}
+                    <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">.cursor/mcp.json</code>:
+                  </p>
+                  <ConfigBlock>
+{`{
+  "mcpServers": {
+    "rpcraft": {
+      "command": "rpc-tui",
+      "args": ["mcp"]
+    }
+  }
+}`}
+                  </ConfigBlock>
+                  <p className="text-muted-soft text-sm">
+                    Cursor loads MCP servers from the project root automatically.
+                  </p>
+                </div>
+
+                <div className="card p-5">
+                  <p className="title-sm mb-1">Gemini CLI</p>
+                  <p className="text-muted mb-2">
+                    Configure via commands:
+                  </p>
+                  <TerminalBlock>
+                    <span className="text-semantic-success">$</span> gemini config set mcpServers.rpcraft.command rpc-tui<br />
+                    <span className="text-semantic-success">$</span> gemini config set mcpServers.rpcraft.args &apos;[&quot;mcp&quot;]&apos;
+                  </TerminalBlock>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <p className="title-sm mb-3 mt-6">Available MCP Tools</p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-hairline">
+                      <th className="text-left py-2 pr-4 font-medium text-ink">Tool</th>
+                      <th className="text-left py-2 pr-4 font-medium text-ink">Description</th>
+                      <th className="text-left py-2 font-medium text-ink">Key params</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-body">
+                    <tr className="border-b border-hairline">
+                      <td className="py-2 pr-4 font-mono text-sm">set_activity</td>
+                      <td className="py-2 pr-4">Set custom Rich Presence</td>
+                      <td className="py-2">state, details, type, largeImageKey</td>
+                    </tr>
+                    <tr className="border-b border-hairline">
+                      <td className="py-2 pr-4 font-mono text-sm">set_profile</td>
+                      <td className="py-2 pr-4">Activate a saved profile</td>
+                      <td className="py-2">name</td>
+                    </tr>
+                    <tr className="border-b border-hairline">
+                      <td className="py-2 pr-4 font-mono text-sm">list_profiles</td>
+                      <td className="py-2 pr-4">List saved profiles</td>
+                      <td className="py-2">—</td>
+                    </tr>
+                    <tr className="border-b border-hairline">
+                      <td className="py-2 pr-4 font-mono text-sm">get_status</td>
+                      <td className="py-2 pr-4">Check connection status</td>
+                      <td className="py-2">—</td>
+                    </tr>
+                    <tr className="border-b border-hairline">
+                      <td className="py-2 pr-4 font-mono text-sm">connect</td>
+                      <td className="py-2 pr-4">Connect to Discord RPC</td>
+                      <td className="py-2">—</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-4 font-mono text-sm">disconnect</td>
+                      <td className="py-2 pr-4">Disconnect from Discord</td>
+                      <td className="py-2">—</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <p className="body-sm text-muted-soft mt-4">
+              💡 <strong>Pro tip:</strong> Once the MCP server is configured, you can ask your agent
+              things like &quot;Set my Discord status to studying&quot; or &quot;Rotate between my coding and
+              music profiles every 10 minutes&quot; — and it just works.
+            </p>
+          </div>
+
+          <hr className="border-hairline my-14" />
+
           <div className="card p-6 text-center">
             <p className="body-md mb-3">Ready to try some presences?</p>
             <a href="/presences" className="btn-primary no-underline">

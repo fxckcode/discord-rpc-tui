@@ -8,6 +8,7 @@ const sections = [
   { id: 'setup-discord', label: 'Setup Discord Developer Portal' },
   { id: 'configuration', label: 'Configuration' },
   { id: 'using-presences', label: 'Using Presences' },
+  { id: 'mcp-integration', label: 'AI Agent Integration' },
   { id: 'troubleshooting', label: 'Troubleshooting' }
 ];
 
