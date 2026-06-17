@@ -1,55 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
   <defs>
-    <linearGradient id="orange-grad" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="o512" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#f54e00"/>
       <stop offset="100%" stop-color="#d04200"/>
     </linearGradient>
-    <linearGradient id="bg-fade" x1="0.5" y1="0" x2="0.5" y2="1">
-      <stop offset="0%" stop-color="#f7f7f4" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#f7f7f4" stop-opacity="1"/>
+    <linearGradient id="b512" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#26251e"/>
+      <stop offset="100%" stop-color="#1a1915"/>
     </linearGradient>
   </defs>
-
-  <!-- Canvas background circle -->
-  <circle cx="200" cy="170" r="140" fill="#f7f7f4" stroke="#e6e5e0" stroke-width="1"/>
-
-  <!-- Outer ring — "Presence" radar sweep -->
-  <path d="M 200 70 A 100 100 0 1 1 110 120" stroke="#f54e00" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.3"/>
-  <path d="M 200 85 A 85 85 0 1 1 125 125" stroke="#f54e00" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
-  <path d="M 200 97 A 73 73 0 1 1 140 130" stroke="#f54e00" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"/>
-
-  <!-- Radar dot -->
-  <circle cx="200" cy="70" r="4" fill="#f54e00"/>
-
-  <!-- Central hexagon — Engineering precision -->
-  <polygon points="200,120 230,136 230,168 200,184 170,168 170,136"
-           fill="#26251e" stroke="none"/>
-
-  <!-- Inner geometric "R" / node pattern -->
-  <circle cx="200" cy="152" r="16" fill="#f7f7f4"/>
-  <path d="M 191 152 L 200 152 L 205 143 M 200 152 L 205 161"
-        stroke="#26251e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-
-  <!-- Neural connection dots (small accents) -->
-  <circle cx="170" cy="136" r="2.5" fill="#f54e00" opacity="0.6"/>
-  <circle cx="230" cy="136" r="2.5" fill="#f54e00" opacity="0.6"/>
-  <circle cx="170" cy="168" r="2.5" fill="#f54e00" opacity="0.6"/>
-  <circle cx="230" cy="168" r="2.5" fill="#f54e00" opacity="0.6"/>
-
-  <!-- Small signal lines from hex corners -->
-  <line x1="170" y1="136" x2="162" y2="128" stroke="#e6e5e0" stroke-width="1" stroke-linecap="round"/>
-  <line x1="230" y1="136" x2="238" y2="128" stroke="#e6e5e0" stroke-width="1" stroke-linecap="round"/>
-  <line x1="170" y1="168" x2="162" y2="176" stroke="#e6e5e0" stroke-width="1" stroke-linecap="round"/>
-  <line x1="230" y1="168" x2="238" y2="176" stroke="#e6e5e0" stroke-width="1" stroke-linecap="round"/>
-
-  <!-- Bottom typography -->
-  <text x="200" y="310" text-anchor="middle" font-family="'Inter', system-ui, sans-serif"
-        font-size="22" font-weight="400" letter-spacing="-0.44" fill="#26251e">
+  <!-- Outer ring — presence field -->
+  <circle cx="256" cy="220" r="180" fill="#f7f7f4" stroke="#e6e5e0" stroke-width="1.5"/>
+  <!-- Signal rings — activity detection -->
+  <circle cx="256" cy="220" r="150" stroke="#f54e00" stroke-width="1" fill="none" opacity="0.08"/>
+  <circle cx="256" cy="220" r="120" stroke="#f54e00" stroke-width="1.2" fill="none" opacity="0.12"/>
+  <circle cx="256" cy="220" r="90" stroke="#f54e00" stroke-width="1.4" fill="none" opacity="0.18"/>
+  <!-- Hexagon — engineering precision -->
+  <polygon points="256,100 325,140 325,220 256,260 187,220 187,140"
+           fill="url(#b512)" stroke="none"/>
+  <!-- Hexagon inner glow -->
+  <polygon points="256,110 317,145 317,215 256,250 195,215 195,145"
+           fill="none" stroke="#3a3933" stroke-width="0.5" opacity="0.4"/>
+  <!-- Presence diamond — the active signal -->
+  <polygon points="256,155 281,180 256,205 231,180" fill="url(#o512)"/>
+  <!-- Signal arcs from diamond -->
+  <path d="M 281 155 A 40 40 0 0 1 305 190" stroke="#f54e00" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.25"/>
+  <path d="M 290 145 A 50 50 0 0 1 318 185" stroke="#f54e00" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.15"/>
+  <!-- Connection dots — network effect -->
+  <circle cx="187" cy="140" r="3" fill="#f54e00" opacity="0.5"/>
+  <circle cx="325" cy="140" r="3" fill="#f54e00" opacity="0.5"/>
+  <circle cx="187" cy="220" r="3" fill="#f54e00" opacity="0.5"/>
+  <circle cx="325" cy="220" r="3" fill="#f54e00" opacity="0.5"/>
+  <!-- Subtle connecting lines -->
+  <line x1="187" y1="140" x2="231" y2="155" stroke="#e6e5e0" stroke-width="1" stroke-linecap="round"/>
+  <line x1="325" y1="140" x2="281" y2="155" stroke="#e6e5e0" stroke-width="1" stroke-linecap="round"/>
+  <line x1="187" y1="220" x2="231" y2="205" stroke="#e6e5e0" stroke-width="1" stroke-linecap="round"/>
+  <line x1="325" y1="220" x2="281" y2="205" stroke="#e6e5e0" stroke-width="1" stroke-linecap="round"/>
+  <!-- Typography -->
+  <text x="256" y="370" text-anchor="middle" font-family="'Inter', system-ui, -apple-system, sans-serif"
+        font-size="36" font-weight="400" letter-spacing="-0.72" fill="#26251e">
     Engineering Reality
   </text>
-
-  <text x="200" y="335" text-anchor="middle" font-family="'JetBrains Mono', monospace"
-        font-size="12" font-weight="400" letter-spacing="2" fill="#807d72">
-    DISCORD · RPC · TUI
+  <text x="256" y="398" text-anchor="middle" font-family="'JetBrains Mono', 'Fira Code', monospace"
+        font-size="13" font-weight="400" letter-spacing="2.5" fill="#807d72">
+    DISCORD · RICH PRESENCE · TUI
   </text>
 </svg>

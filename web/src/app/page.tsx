@@ -93,12 +93,29 @@ export default function HomePage() {
 
         <div className="container-wide relative z-10">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="display-mega mb-6 animate-fade-in-up stagger-delay-1">
+            {/* Brand mark */}
+            <div className="mb-8 flex justify-center animate-fade-in-up stagger-delay-1">
+              <svg
+                width="64"
+                height="64"
+                viewBox="0 0 64 64"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="opacity-90"
+              >
+                <circle cx="32" cy="32" r="30" fill="var(--canvas)" stroke="var(--hairline)" strokeWidth="1" />
+                <polygon points="32,10 47,19 47,37 32,46 17,37 17,19" fill="#26251e" />
+                <polygon points="32,21 39,28 32,35 25,28" fill="var(--primary)" />
+                <path d="M 45 14 A 22 22 0 0 1 52 28" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.3" />
+                <path d="M 48 10 A 28 28 0 0 1 56 26" stroke="var(--primary)" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.2" />
+              </svg>
+            </div>
+            <h1 className="display-mega mb-6 animate-fade-in-up stagger-delay-2">
               Your Discord Presence.
               <br />
               <span className="text-primary">Curated.</span>
             </h1>
-            <p className="body-md mx-auto mb-10 max-w-xl text-muted animate-fade-in-up stagger-delay-2">
+            <p className="body-md mx-auto mb-10 max-w-xl text-muted animate-fade-in-up stagger-delay-3">
               Browse and apply beautiful Rich Presences to your Discord profile
               with a single terminal command. No bloat. Just good design.
             </p>
