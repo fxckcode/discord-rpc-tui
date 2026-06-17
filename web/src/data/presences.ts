@@ -3,19 +3,19 @@ import { Presence } from '@/types';
 export const presences: Presence[] = [
   {
     id: 'engineering-reality',
-    name: 'Engineering Reality with AI',
+    name: 'RPCraft — Engineering Reality',
     description:
-      'Forge the unseen — a sleek engineering presence that signals you are building the future with TypeScript, systems, and inference.',
+      'Craft your Discord presence — a sleek engineering presence that signals you are building the future with TypeScript, systems, and inference.',
     category: 'Coding',
     featured: true,
     clientId: '788494723714252871',
     activity: {
-      name: 'Engineering Reality with AI',
-      state: 'Forging the unseen',
+      name: 'RPCraft — Engineering Reality',
+      state: 'Crafting your presence',
       details: 'TypeScript · Systems · Inference',
       type: 0,
       largeImageKey: 'imagen',
-      largeImageText: 'Engineering Reality with AI'
+      largeImageText: 'RPCraft — Engineering Reality'
     },
     tags: ['typescript', 'ai', 'engineering', 'minimal']
   },

@@ -31,8 +31,7 @@ export function Logo({ size = 'sm' }: { size?: 'sm' | 'md' | 'lg' }) {
       {/* Wordmark */}
       <span className="hidden sm:inline font-sans font-normal tracking-tight text-ink">
         <span className="inline-flex items-baseline gap-0">
-          Engineering
-          <span className="font-normal mx-1" style={{ color: 'var(--primary)' }}>Reality</span>
+          RPCraft
         </span>
       </span>
     </Link>

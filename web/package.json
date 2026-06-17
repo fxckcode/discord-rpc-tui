@@ -3,8 +3,9 @@
   "version": "0.4.0",
   "private": true,
   "author": {
-    "name": "josecortezz16"
+    "name": "fxckcode"
   },
+  "description": "RPCraft — Craft your Discord Presence. Browse and apply beautiful Rich Presences.",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -87,5 +88,11 @@
       "plugin:storybook/recommended"
     ]
   },
-  "description": "Discord RPC Presence Gallery — browse and apply beautiful Rich Presences"
+  "keywords": [
+    "rpcraft",
+    "discord",
+    "rich-presence",
+    "rpc",
+    "presence-gallery"
+  ]
 }

@@ -111,13 +111,13 @@ export default function HomePage() {
               </svg>
             </div>
             <h1 className="display-mega mb-6 animate-fade-in-up stagger-delay-2">
-              Your Discord Presence.
+              Craft your Discord Presence.
               <br />
               <span className="text-primary">Curated.</span>
             </h1>
             <p className="body-md mx-auto mb-10 max-w-xl text-muted animate-fade-in-up stagger-delay-3">
               Browse and apply beautiful Rich Presences to your Discord profile
-              with a single terminal command. No bloat. Just good design.
+              with one terminal command. No bloat. Just good presence.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up stagger-delay-3">
               <Link href="/presences" className="btn-primary no-underline">
@@ -213,7 +213,7 @@ export default function HomePage() {
                     </div>
                     <div className="min-w-0 flex-1 text-left">
                       <p className="truncate text-[11px] font-medium text-ink">
-                        Engineering Reality with AI
+                        RPCraft — Engineering Reality
                       </p>
                       <p className="truncate text-[10px] text-muted-soft">
                         Coding · Featured

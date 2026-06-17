@@ -18,10 +18,10 @@
   <!-- Wordmark -->
   <text x="84" y="36" font-family="'Inter', system-ui, -apple-system, sans-serif"
         font-size="22" font-weight="400" letter-spacing="-0.44" fill="#26251e">
-    Engineering Reality
+    RPCraft
   </text>
   <text x="84" y="56" font-family="'JetBrains Mono', 'Fira Code', monospace"
         font-size="10" font-weight="400" letter-spacing="2" fill="#807d72">
-    DISCORD · RICH PRESENCE · TUI
+    CRAFT YOUR DISCORD PRESENCE
   </text>
 </svg>

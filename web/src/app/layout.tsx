@@ -23,34 +23,35 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Engineering Reality — Discord Rich Presence Gallery',
-    template: '%s — Engineering Reality',
+    default: 'RPCraft — Craft your Discord Presence',
+    template: '%s — RPCraft',
   },
   description:
-    'Browse, discover, and apply beautiful Rich Presences to your Discord profile with one terminal command.',
-  metadataBase: new URL('https://discord-rpc-tui.vercel.app'),
-  applicationName: 'Discord RPC Gallery',
+    'Browse and apply beautiful Rich Presences to your Discord profile with a single terminal command. Craft your presence.',
+  metadataBase: new URL('https://rpcraft.sh'),
+  applicationName: 'RPCraft',
   keywords: [
+    'rpcraft',
     'discord',
     'rpc',
     'rich presence',
     'discord presence',
-    'gallery',
-    'engineering reality',
+    'presence gallery',
+    'craft your presence',
   ],
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    siteName: 'Engineering Reality',
-    title: 'Engineering Reality — Discord Rich Presence Gallery',
+    siteName: 'RPCraft',
+    title: 'RPCraft — Craft your Discord Presence',
     description:
-      'Browse, discover, and apply beautiful Rich Presences to your Discord profile with one terminal command.',
+      'Browse and apply beautiful Rich Presences to your Discord profile with a single terminal command.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Engineering Reality — Discord Rich Presence Gallery',
+    title: 'RPCraft — Craft your Discord Presence',
     description:
-      'Browse, discover, and apply beautiful Rich Presences to your Discord profile with one terminal command.',
+      'Browse and apply beautiful Rich Presences to your Discord profile with a single terminal command.',
   },
   icons: {
     icon: '/icon.svg',

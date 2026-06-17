@@ -55,7 +55,7 @@ export default function DocsPage() {
           <h1 className="display-md mb-2">Documentation</h1>
           <p className="body-md text-muted mb-12">
             Everything you need to know about setting up and using{' '}
-            <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">discord-rpc-tui</code>.
+            <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">RPCraft</code>.
           </p>
 
           {/* Section 1: Quick Start */}

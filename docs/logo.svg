@@ -39,10 +39,10 @@
   <!-- Typography -->
   <text x="256" y="370" text-anchor="middle" font-family="'Inter', system-ui, -apple-system, sans-serif"
         font-size="36" font-weight="400" letter-spacing="-0.72" fill="#26251e">
-    Engineering Reality
+    RPCraft
   </text>
   <text x="256" y="398" text-anchor="middle" font-family="'JetBrains Mono', 'Fira Code', monospace"
         font-size="13" font-weight="400" letter-spacing="2.5" fill="#807d72">
-    DISCORD · RICH PRESENCE · TUI
+    CRAFT YOUR DISCORD PRESENCE
   </text>
 </svg>
