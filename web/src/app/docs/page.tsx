@@ -154,7 +154,8 @@ export default function DocsPage() {
                 Upload images
               </p>
               <p>
-                Click <strong>Add Image(s)</strong> and select your PNG, JPG, or GIF files.
+                Click <strong>Add Image(s)</strong> and select your PNG or JPG files
+                (the Developer Portal only accepts static images — see below for animated GIF support).
                 These images appear as the large or small icons in your Rich Presence.
               </p>
             </div>
@@ -254,7 +255,8 @@ export default function DocsPage() {
                     <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">state</code>,{' '}
                     <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">details</code>,{' '}
                     <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">type</code>,{' '}
-                    <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">largeImageKey</code>,{' '}
+                    <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">largeImageKey</code> /{' '}
+                    <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">largeImageUrl</code>,{' '}
                     <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">buttons</code>, and more
                   </li>
                 </ul>
@@ -309,6 +311,60 @@ export default function DocsPage() {
                     </tbody>
                   </table>
                 </div>
+              </div>
+
+              <div>
+                <p className="title-sm mb-2">Image fields — Asset Keys vs External URLs</p>
+                <p className="text-muted mb-3">
+                  You have two ways to set images in your Rich Presence:
+                </p>
+                <div className="overflow-x-auto mt-2 mb-4">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-hairline">
+                        <th className="text-left py-2 pr-4 font-medium text-ink">Method</th>
+                        <th className="text-left py-2 pr-4 font-medium text-ink">Field</th>
+                        <th className="text-left py-2 pr-4 font-medium text-ink">Source</th>
+                        <th className="text-left py-2 font-medium text-ink">Animated GIF</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-body">
+                      <tr className="border-b border-hairline">
+                        <td className="py-2 pr-4 font-medium">Asset Key</td>
+                        <td className="py-2 pr-4 font-mono">largeImageKey / smallImageKey</td>
+                        <td className="py-2 pr-4">Developer Portal (Rich Presence → Art Assets)</td>
+                        <td className="py-2">❌ No</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 pr-4 font-medium">External URL</td>
+                        <td className="py-2 pr-4 font-mono">largeImageUrl / smallImageUrl</td>
+                        <td className="py-2 pr-4">Any public HTTPS URL (Imgur, your own server, etc.)</td>
+                        <td className="py-2">✅ Yes</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-muted">
+                  <strong>Asset Keys</strong> reference images uploaded to Discord's Developer Portal.
+                  Discord only accepts <strong>static PNG/JPEG</strong> files for upload — no GIF support.
+                </p>
+                <p className="text-muted mt-2">
+                  <strong>External URLs</strong> let you use any publicly hosted image, including animated
+                  GIFs. Use image hosting services like Imgur. Supported formats:{' '}
+                  <strong>jpg, png, webp, gif</strong>. This is how tools like{' '}
+                  <a href="https://customrp.xyz" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">CustomRP</a>{' '}
+                  and{' '}
+                  <a href="https://vencord.dev/plugins/CustomRPC" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Vencord CustomRPC</a>{' '}
+                  achieve animated Rich Presence images.
+                </p>
+                <ConfigBlock>
+                  {`{
+  "activity": {
+    "largeImageUrl": "https://i.imgur.com/your-animated-gif.gif",
+    "largeImageText": "My animated image"
+  }
+}`}
+                </ConfigBlock>
               </div>
             </div>
           </div>
@@ -393,12 +449,20 @@ export default function DocsPage() {
             <div className="card p-5">
               <p className="title-sm mb-1 text-semantic-error">Image not showing</p>
               <p className="text-muted">
-                Check that the asset name in your config matches exactly (including case)
+                <strong>If using asset keys</strong> — check that the asset name in your config matches exactly (including case)
                 the name shown in the Discord Developer Portal. Asset names are
                 case-sensitive —{' '}
                 <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">MyImage</code> and{' '}
                 <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">myimage</code> are
                 different.
+              </p>
+              <p className="text-muted mt-2">
+                <strong>If using external URLs</strong> — make sure the URL is publicly accessible (HTTPS).
+                Discord only loads images from HTTPS URLs. Test the URL in your browser first.
+                If your image is a GIF and it's not animating, check that you're using{' '}
+                <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">largeImageUrl</code>{' '}
+                (not <code className="font-mono text-sm bg-surface-strong rounded px-1.5 py-0.5">largeImageKey</code>)
+                — asset keys never animate.
               </p>
             </div>
 

@@ -172,7 +172,7 @@ describe('RPCManager', () => {
     expect(activitySpy).toHaveBeenCalledWith('TestProfile');
   });
 
-  it('should convert largeImageUrl to mp:external format', async () => {
+  it('should use mp:external/ prefix for largeImageUrl', async () => {
     await connectAndEmitReady();
     await manager.setActivity({
       state: 'test',
@@ -192,7 +192,7 @@ describe('RPCManager', () => {
     expect(args.largeImageKey).toBe('my_uploaded_asset');
   });
 
-  it('should prefer largeImageUrl over largeImageKey', async () => {
+  it('should prefer largeImageUrl with mp:external prefix when both set', async () => {
     await connectAndEmitReady();
     await manager.setActivity({
       state: 'test',
@@ -203,7 +203,7 @@ describe('RPCManager', () => {
     expect(args.largeImageKey).toBe('mp:external/https://example.com/image.png');
   });
 
-  it('should convert smallImageUrl to mp:external format', async () => {
+  it('should use mp:external/ prefix for smallImageUrl', async () => {
     await connectAndEmitReady();
     await manager.setActivity({
       state: 'test',

@@ -7,7 +7,7 @@
 - 🎨 **Beautiful TUI** — built with Ink (React), full keyboard navigation
 - 🔄 **Activity Rotation** — set multiple profiles that rotate automatically
 - 🔗 **Auto-reconnect** — survives Discord restarts with exponential backoff
-- 📋 **Rich Presence** — state, details, timestamps, buttons (max 2), images, activity type
+- 📋 **Rich Presence** — state, details, timestamps, buttons (max 2), images via asset keys or external URLs (static PNG/JPEG — Discord CDN strips GIF animation)
 - 🌐 **Presence Gallery** — browse and apply beautiful presences at [rpcraft.sh](https://rpcraft.sh)
 - 🤖 **MCP Server** — Model Context Protocol server for agent CLI integration (Hermes Agent, Claude Code, Codex CLI)
 - ⚙️ **Configurable** — JSON config at `~/.config/rpcraft/config.json`
@@ -97,7 +97,7 @@ rpc-tui mcp --sse --port 3100
 
 | Tool | Description | Parameters |
 |------|-------------|------------|
-| `set_activity` | Set custom Rich Presence | `state`, `details`, `name`, `type`, `startTimestamp`, `largeImageKey`, `largeImageText`, `smallImageKey`, `smallImageText`, `buttons[]` |
+| `set_activity` | Set custom Rich Presence | `state`, `details`, `name`, `type`, `startTimestamp`, `largeImageKey`, `largeImageUrl`, `largeImageText`, `smallImageKey`, `smallImageUrl`, `smallImageText`, `buttons[]` |
 | `list_profiles` | List profiles from config | _(none)_ |
 | `get_status` | Get connection + Discord status | _(none)_ |
 | `set_profile` | Activate a profile by name | `name` (required) |
@@ -120,6 +120,7 @@ Located at `~/.config/rpcraft/config.json`:
         "state": "Exploring Hyrule",
         "details": "Zelda: Tears of the Kingdom",
         "largeImageKey": "zelda",
+        "largeImageText": "Zelda TOTK",
         "type": 0,
         "startTimestamp": true,
         "buttons": [{ "label": "Watch Stream", "url": "https://twitch.tv/..." }]
@@ -131,6 +132,27 @@ Located at `~/.config/rpcraft/config.json`:
   "repoUrl": "https://github.com/fxckcode/discord-rpc-tui",
   "repoButtonLabel": "⭐ View on GitHub"
 }
+```
+
+### Images — Asset Keys vs External URLs
+
+You have two ways to set images in your Rich Presence:
+
+| Method | Field | Source | Animated |
+|--------|-------|--------|:---:|
+| **Asset Key** | `largeImageKey` / `smallImageKey` | Upload to [Discord Developer Portal](https://discord.com/developers/applications) → Rich Presence → Art Assets | ❌ |
+| **External URL** | `largeImageUrl` / `smallImageUrl` | Any public HTTPS URL (GitHub, Imgur, your own server, etc.) | ❌ |
+
+> **⚠️ Limitation:** Discord's CDN proxy processes all external images and strips animation from GIFs. Only static PNG/JPEG/WebP images will display correctly. This is a Discord limitation — not a bug in RPCraft. Even tools like [Vencord CustomRPC](https://vencord.dev/plugins/CustomRPC) only use application assets, not external URLs.
+
+**Asset Key (static only)** — upload PNG/JPEG to Discord's Developer Portal under Rich Presence → Art Assets. Reference the asset by its name (lowercase, no extension):
+```json
+"largeImageKey": "my_asset_name"
+```
+
+**External URL (static PNG/JPEG recommended)** — host your image anywhere and paste the URL. Supported formats: **jpg, png, webp**. For best results use images under 1024×1024 and under 1MB:
+```json
+"largeImageUrl": "https://example.com/my-image.png"
 ```
 
 ## Architecture

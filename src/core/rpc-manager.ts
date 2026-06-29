@@ -92,23 +92,21 @@ export class RPCManager extends EventEmitter {
     }
 
     // Assets
-    // largeImageKey: uploaded asset name from Dev Portal
-    // largeImageUrl: external URL (auto-converted to mp:external/ for Discord RPC)
+    // largeImageKey: uploaded asset name from Dev Portal (static images only)
+    // largeImageUrl: external URL (static PNG/JPEG only — Discord CDN strips GIF animation)
+    // Discord RPC uses mp:external/ prefix in large_image for external URLs
+    // Both large_image (mp:external/URL) and large_url (raw URL) are required
     if (finalActivity.largeImageUrl) {
-      // External URL → use mp:external/ prefix
-      const url = finalActivity.largeImageUrl.startsWith('http')
-        ? `mp:external/${finalActivity.largeImageUrl}`
-        : finalActivity.largeImageUrl;
-      rpcActivity.largeImageKey = url;
+      rpcActivity.largeImageKey = `mp:external/${finalActivity.largeImageUrl}`;
+      rpcActivity.largeImageUrl = finalActivity.largeImageUrl;
     } else if (finalActivity.largeImageKey) {
       rpcActivity.largeImageKey = finalActivity.largeImageKey;
     }
     if (finalActivity.largeImageText) rpcActivity.largeImageText = finalActivity.largeImageText;
+
     if (finalActivity.smallImageUrl) {
-      const url = finalActivity.smallImageUrl.startsWith('http')
-        ? `mp:external/${finalActivity.smallImageUrl}`
-        : finalActivity.smallImageUrl;
-      rpcActivity.smallImageKey = url;
+      rpcActivity.smallImageKey = `mp:external/${finalActivity.smallImageUrl}`;
+      rpcActivity.smallImageUrl = finalActivity.smallImageUrl;
     } else if (finalActivity.smallImageKey) {
       rpcActivity.smallImageKey = finalActivity.smallImageKey;
     }
