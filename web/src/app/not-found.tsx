@@ -1,4 +1,17 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Page Not Found',
+  description: 'The requested presence or page could not be found. Browse the RPCraft gallery for beautiful Discord Rich Presences.',
+  robots: {
+    index: false,
+    follow: true,
+  },
+  alternates: {
+    canonical: '/presences',
+  },
+};
 
 export default function NotFound() {
   return (

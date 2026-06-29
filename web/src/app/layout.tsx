@@ -38,6 +38,8 @@ export const metadata: Metadata = {
     'discord presence',
     'presence gallery',
     'craft your presence',
+    'discord rpc',
+    'discord rich presence gallery',
   ],
   icons: {
     icon: '/icon.svg',
@@ -46,6 +48,9 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  alternates: {
+    canonical: '/',
   },
   openGraph: {
     type: 'website',
@@ -102,6 +107,27 @@ export default function RootLayout({
                 '@type': 'Offer',
                 price: '0',
                 priceCurrency: 'USD',
+              },
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'RPCraft',
+              url: 'https://rpcraft.cloud',
+              logo: 'https://rpcraft.cloud/icon.svg',
+              sameAs: [
+                'https://github.com/fxckcode/discord-rpc-tui',
+                'https://linktree.diegoduran.site/',
+              ],
+              author: {
+                '@type': 'Person',
+                name: 'fxckcode',
+                url: 'https://linktree.diegoduran.site/',
               },
             })
           }}

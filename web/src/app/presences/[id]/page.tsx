@@ -20,7 +20,20 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   if (!presence) return { title: 'Presence Not Found' };
   return {
     title: `${presence.name} — Presence Gallery`,
-    description: presence.description
+    description: presence.description || `Apply the "${presence.name}" Discord Rich Presence to your profile. ${presence.activity.state || ''}`,
+    alternates: {
+      canonical: `/presences/${presence.id}`,
+    },
+    openGraph: {
+      title: `${presence.name} — RPCraft`,
+      description: presence.description,
+      images: [{ url: '/og.svg', width: 512, height: 512 }],
+    },
+    twitter: {
+      title: `${presence.name} — RPCraft`,
+      description: presence.description,
+      images: ['/og.svg'],
+    },
   };
 }
 
@@ -41,8 +54,24 @@ export default async function PresenceDetailPage({
   const typeColor =
     ACTIVITY_TYPE_COLORS[presence.activity.type as ActivityType];
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://rpcraft.cloud/' },
+      { '@type': 'ListItem', position: 2, name: 'Presence Gallery', item: 'https://rpcraft.cloud/presences' },
+      { '@type': 'ListItem', position: 3, name: presence.activity.name || presence.name, item: `https://rpcraft.cloud/presences/${presence.id}` },
+    ],
+  };
+
   return (
     <div className="bg-canvas">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd)
+        }}
+      />
       <div className="container-wide section-padding">
         {/* Back link */}
         <Link
